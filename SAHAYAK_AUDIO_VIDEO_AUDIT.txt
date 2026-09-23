@@ -1,0 +1,237 @@
+================================================================================
+SAHAYAK — AUDIO & YOUTUBE VIDEO AUDIT
+Date: 2026-09-22
+Scope: audit only — no application files were modified.
+================================================================================
+
+--------------------------------------------------------------------------------
+1. AUDIT SUMMARY
+--------------------------------------------------------------------------------
+Lessons audited (src/data/lessons.ts) ............ 28
+Scam stories audited (src/data/scams.ts) ......... 7
+Audio files already recorded ..................... 0  (public/audio/manifest.json has empty en/hi/mr arrays)
+Lessons already having an English video .......... 9  (video.en set in lessons.ts)
+TUTORIALS on the separate /watch page ............ 10 (src/data/content.ts — left alone, not part of this plan)
+
+How the current hybrid TTS works (facts, from src/lib/speech.ts and callers):
+- ListenButton is used in exactly 3 places:
+  * src/routes/learn.$lessonId.tsx  -> audioKey = lesson id (28 lessons)
+  * src/routes/safe.$storyId.tsx    -> audioKey = story id  (7 stories)
+  * src/routes/dictionary.tsx       -> NO audioKey (always browser TTS)
+- Audio is only used if the key is listed in public/audio/manifest.json
+  under the matching language array, with the file at public/audio/<lang>/<key>.mp3.
+- Lesson playback text = title + description + all steps joined.
+- Story playback text = title + story body + warning signs + key lesson.
+- NOTE: the Emergency page, Onboarding, Help Topics, quizzes and scenarios
+  currently have NO listen button / audioKey, so recordings for those would
+  be unused until a code change adds one. They are therefore NOT in the
+  record-now list.
+
+--------------------------------------------------------------------------------
+2. PART 1 — AUDIO / TTS PRIORITY LIST
+--------------------------------------------------------------------------------
+
+2.1 Language recommendation (audio)
+- Marathi + Hindi: recorded audio is genuinely worth it. Browser hi-IN / mr-IN
+  voices are often missing or robotic on budget Android phones, and these are
+  the primary languages of the target elderly users.
+- English: SKIP recorded audio for now. en-IN browser voices are widely
+  available and acceptable. Recommend 0 English recordings in the initial release.
+
+2.2 PRIORITY A — ESSENTIAL (record these first)
+All items: record the COMPLETE read-aloud text (exactly what the Listen button
+speaks), in Hindi AND Marathi. 10 items x 2 languages = 20 clips.
+
+| # | Lesson/Topic (EN title)                                | ID/Key                  | What to record                                                        | Audio type  | Languages | Expected files (public/audio/...)                  |
+|---|--------------------------------------------------------|-------------------------|-----------------------------------------------------------------------|-------------|-----------|----------------------------------------------------|
+| 1 | The Fake Bank Officer Calling About KYC Expiry         | story-fake-bank-officer | Whole story: title + narrative + warning signs + key lesson           | Scam story  | hi, mr    | hi/story-fake-bank-officer.mp3, mr/story-fake-bank-officer.mp3 |
+| 2 | The OLX Buyer Who Sent a 'Collect Request'             | story-upi-request       | Whole story: title + narrative + warning signs + key lesson           | Scam story  | hi, mr    | hi/story-upi-request.mp3, mr/story-upi-request.mp3 |
+| 3 | The Midnight Electricity Cut Threat SMS                | story-electricity-bill  | Whole story: title + narrative + warning signs + key lesson           | Scam story  | hi, mr    | hi/story-electricity-bill.mp3, mr/story-electricity-bill.mp3 |
+| 4 | The Fake Police Video Call & 'Digital Arrest' Scam     | story-digital-arrest    | Whole story: title + narrative + warning signs + key lesson           | Scam story  | hi, mr    | hi/story-digital-arrest.mp3, mr/story-digital-arrest.mp3 |
+| 5 | The Fake Customer Care Number Found on Google Search   | story-fake-customer-care| Whole story: title + narrative + warning signs + key lesson           | Scam story  | hi, mr    | hi/story-fake-customer-care.mp3, mr/story-fake-customer-care.mp3 |
+| 6 | The WhatsApp 'Hi Mom, I Lost My Phone' Scam            | story-whatsapp-impersonation | Whole story: title + narrative + warning signs + key lesson      | Scam story  | hi, mr    | hi/story-whatsapp-impersonation.mp3, mr/story-whatsapp-impersonation.mp3 |
+| 7 | The WhatsApp KBC / Lucky Draw Rs.25 Lakh Lottery Scam  | story-kbc-lottery       | Whole story: title + narrative + warning signs + key lesson           | Scam story  | hi, mr    | hi/story-kbc-lottery.mp3, mr/story-kbc-lottery.mp3 |
+| 8 | The Golden Rule: PIN is ONLY to send money             | pay-upi-pin             | Whole lesson: title + description + all 5 steps (most important money rule) | Lesson | hi, mr | hi/pay-upi-pin.mp3, mr/pay-upi-pin.mp3 |
+| 9 | What is an OTP and why you must never share it         | net-otp                 | Whole lesson: title + description + all 5 steps (core safety warning) | Lesson      | hi, mr    | hi/net-otp.mp3, mr/net-otp.mp3                     |
+|10 | Understanding your phone buttons                       | basics-understanding-phone | Whole lesson: title + description + all 5 steps (first lesson every new user hears) | Lesson | hi, mr | hi/basics-understanding-phone.mp3, mr/basics-understanding-phone.mp3 |
+
+Why these: the 7 scam stories are long narratives (hard to read, ideal to
+listen to) and carry the safety warnings; pay-upi-pin and net-otp are the two
+highest-stakes money-safety lessons; basics-understanding-phone is the first
+experience most new users have.
+
+2.3 PRIORITY B — USEFUL (phase 2, after Priority A is done)
+Same recording rule: complete read-aloud text, Hindi + Marathi.
+8 items x 2 languages = 16 clips.
+
+| # | Lesson/Topic (EN title)                          | ID/Key               | What to record                                  | Audio type | Languages | Expected files (public/audio/...)      |
+|---|--------------------------------------------------|----------------------|-------------------------------------------------|------------|-----------|----------------------------------------|
+| 1 | Understanding UPI payments safely                | pay-what-is-upi      | Whole lesson (concept explanation)              | Lesson     | hi, mr    | hi/pay-what-is-upi.mp3, mr/pay-what-is-upi.mp3 |
+| 2 | What to do if a payment gets stuck               | pay-failed-refund    | Whole lesson (reassurance + steps when money is stuck) | Lesson | hi, mr | hi/pay-failed-refund.mp3, mr/pay-failed-refund.mp3 |
+| 3 | Scanning a shop QR code to pay                   | pay-qr-code          | Whole lesson (step-by-step instruction)         | Lesson     | hi, mr    | hi/pay-qr-code.mp3, mr/pay-qr-code.mp3 |
+| 4 | Setting a secure screen lock                     | basics-screen-lock   | Whole lesson (step-by-step instruction)         | Lesson     | hi, mr    | hi/basics-screen-lock.mp3, mr/basics-screen-lock.mp3 |
+| 5 | Sending a WhatsApp text message                  | wa-send-message      | Whole lesson (step-by-step instruction)         | Lesson     | hi, mr    | hi/wa-send-message.mp3, mr/wa-send-message.mp3 |
+| 6 | Sending a voice message                          | wa-voice-message     | Whole lesson (step-by-step instruction)         | Lesson     | hi, mr    | hi/wa-voice-message.mp3, mr/wa-voice-message.mp3 |
+| 7 | Making a video call to see your family           | wa-video-call        | Whole lesson (step-by-step instruction)         | Lesson     | hi, mr    | hi/wa-video-call.mp3, mr/wa-video-call.mp3 |
+| 8 | Recognizing safe websites and links              | net-safe-browsing    | Whole lesson (safety explanation)               | Lesson     | hi, mr    | hi/net-safe-browsing.mp3, mr/net-safe-browsing.mp3 |
+
+2.4 PRIORITY C — SKIP FOR NOW (browser TTS is fine)
+15 lessons, rely on speechSynthesis:
+  basics-touchscreen, basics-volume, basics-large-text, basics-torch,
+  basics-contacts, wa-delete-mistake, wa-group-privacy, pay-check-balance,
+  net-wifi-vs-data, net-search-google, net-update-apps, svc-navigation,
+  svc-digilocker, svc-doctor-appointment, svc-utility-bills, svc-senior-schemes
+Also skip (no audioKey wired in current code, so recordings would be unused):
+  - All dictionary entries (dictionary.tsx has no audioKey)
+  - Emergency page content (EmergencyContent has no listen button). Valuable,
+    but only worth recording if a listen button is added there later.
+  - Onboarding text, quiz questions, Scam-or-Safe scenarios, HELP_TOPICS.
+
+2.5 ALREADY COVERED BY EXISTING AUDIO MANIFEST
+None. public/audio/manifest.json currently lists zero keys for en/hi/mr.
+After recording each file, add its key to the matching language array, e.g.:
+  "hi": ["story-fake-bank-officer", "story-upi-request", ...],
+  "mr": ["story-fake-bank-officer", ...]
+
+2.6 AUDIO TOTALS
+  Priority A items .......... 10  (= 20 clips: 10 Hindi + 10 Marathi)
+  Priority B items .......... 8   (= 16 clips: 8 Hindi + 8 Marathi)
+  Priority C items .......... 15 lessons + dictionary/quizzes/scenarios/help topics/onboarding/emergency text
+  English recordings ........ 0   (browser TTS is sufficient)
+  Hindi recordings .......... 18  (10 A + 8 B)
+  Marathi recordings ........ 18  (10 A + 8 B)
+  Already-existing audio .... 0
+
+--------------------------------------------------------------------------------
+3. PART 2 — YOUTUBE VIDEO PRIORITY LIST
+--------------------------------------------------------------------------------
+
+3.1 Current video state (facts)
+- Video data lives in src/data/lessons.ts, field: video { en?, hi?, mr? }.
+- 9 lessons already have a verified ENGLISH id (video.en):
+    basics-understanding-phone, basics-taking-photos, wa-send-message,
+    wa-video-call, pay-what-is-upi, pay-qr-code, net-otp, net-safe-browsing,
+    svc-navigation
+- 0 lessons have Hindi or Marathi video ids.
+- The player picks video[current language] and falls back to video.en, so a
+  Hindi video only needs to be added as video.hi — English keeps working.
+- RULES APPLIED BELOW: Hindi preferred, English fallback, NO Marathi searches,
+  max one video per lesson, only where visuals genuinely help.
+
+3.2 PRIORITY A — VIDEOS (10)
+| # | Lesson/Topic                       | ID/Key                     | Why a video helps                                        | Language | What it should demonstrate                                  | YouTube search keywords |
+|---|------------------------------------|----------------------------|----------------------------------------------------------|----------|-------------------------------------------------------------|--------------------------|
+| 1 | Understanding your phone buttons   | basics-understanding-phone | Buttons/icons are physical things — must be seen         | Hindi (has EN already) | Power/volume buttons, home bar, back gesture on a real phone | "बुजुर्गों के लिए स्मार्टफोन कैसे चलाएं", "smartphone basics for seniors hindi" |
+| 2 | Using the touchscreen gently       | basics-touchscreen         | Tap/scroll/swipe gestures cannot be described well in text | Hindi  | Real finger taps, scrolling, swiping between photos          | "मोबाइल में टच स्क्रीन कैसे चलाएं", "how to use smartphone touchscreen for beginners hindi" |
+| 3 | Making text larger                 | basics-large-text          | Settings path is easy to get lost in                     | Hindi    | Settings > Display > Font size, slider moved live            | "फोन के अक्षर बड़े कैसे करें", "how to increase font size android hindi" |
+| 4 | Setting a secure screen lock       | basics-screen-lock         | Multi-screen settings flow                               | Hindi    | Settings > Security > Screen lock > set PIN                  | "फोन में पिन लॉक कैसे लगाएं", "how to set screen lock pin android hindi" |
+| 5 | Taking and viewing photos          | basics-taking-photos       | Camera app flow is very visual                           | Hindi (has EN already) | Camera icon, focus tap, shutter, viewing in gallery          | "मोबाइल से फोटो कैसे खींचें", "how to take photos on smartphone hindi for seniors" |
+| 6 | Sending a WhatsApp text message    | wa-send-message            | Chat list + keyboard + send button flow                  | Hindi (has EN already) | Opening chat, typing, green send button                      | "व्हाट्सएप पर मैसेज कैसे भेजें", "whatsapp message kaise bheje hindi" |
+| 7 | Sending a voice message            | wa-voice-message           | Press-and-hold mic gesture is hard to explain in text    | Hindi    | Holding the mic button, speaking, releasing to send          | "व्हाट्सएप वॉइस मैसेज कैसे भेजें", "whatsapp voice message kaise bheje" |
+| 8 | Making a video call                | wa-video-call              | Call screen icons are confusing without seeing them      | Hindi (has EN already) | Video camera icon, call screen, red hang-up button           | "व्हाट्सएप वीडियो कॉल कैसे करें", "whatsapp video call kaise kare hindi" |
+| 9 | Scanning a shop QR code to pay     | pay-qr-code                | Scan + verify + PIN sequence needs visual demonstration  | Hindi (has EN already) | Scan QR, check shop name, enter amount, enter PIN            | "क्यूआर कोड स्कैन करके पेमेंट कैसे करें", "qr code scan karke payment kaise kare" |
+|10 | Finding your way with Google Maps  | svc-navigation             | Directions UI + spoken guidance is very visual           | Hindi (has EN already) | Search place, Directions, Start, following turn-by-turn voice | "गूगल मैप्स से रास्ता कैसे देखें", "google maps directions hindi me" |
+
+3.3 PRIORITY B — VIDEOS (4)
+| # | Lesson/Topic                      | ID/Key              | Why a video helps                        | Language | What it should demonstrate                          | YouTube search keywords |
+|---|-----------------------------------|---------------------|------------------------------------------|----------|-----------------------------------------------------|--------------------------|
+| 1 | Checking your bank balance safely | pay-check-balance   | In-app flow differs per UPI app          | Hindi    | PhonePe/GPay > check balance > enter PIN privately  | "यूपीआई ऐप से बैंक बैलेंस कैसे देखें", "upi app se bank balance check kaise kare" |
+| 2 | Searching safely on Google with voice | net-search-google | Mic button + speaking is visual        | Hindi    | Google mic icon, speaking a query, reading results  | "गूगल पर बोलकर सर्च कैसे करें", "google voice search kaise kare hindi" |
+| 3 | Updating apps safely on Wi-Fi     | net-update-apps     | Play Store menus are easy to miss        | Hindi    | Play Store > profile > Manage apps > Update         | "प्ले स्टोर से ऐप अपडेट कैसे करें", "play store app update kaise kare hindi" |
+| 4 | Saving phone numbers with names   | basics-contacts     | Dialer > add contact flow                | Hindi    | Dial number, Add Contact, type name, Save           | "फोन में नंबर सेव कैसे करें", "mobile me contact save kaise kare hindi" |
+
+3.4 TOPICS THAT DO NOT NEED A VIDEO
+- basics-volume, basics-torch ................... single-button actions, text steps suffice
+- wa-delete-mistake, wa-group-privacy ........... short setting toggles, text suffices
+- pay-what-is-upi, pay-upi-pin, pay-failed-refund, net-otp, net-wifi-vs-data
+  ............................................... concept/warning content — audio + text better than video
+- net-safe-browsing, svc-navigation .............. net-safe-browsing already has an English video; keep it
+- svc-digilocker, svc-doctor-appointment, svc-utility-bills, svc-senior-schemes
+  ............................................... gov-service walkthroughs vary in quality; text steps are enough for initial release
+- All 7 scam stories ............................. narrative content, no video value
+- Lessons that already have an English video and are NOT in the tables above
+  (pay-what-is-upi, net-otp, net-safe-browsing): keep the existing English video, no action needed.
+
+3.5 VIDEO TOTALS
+  Priority A videos .......... 10 (all search Hindi first; 5 already have English fallback)
+  Priority B videos .......... 4  (all Hindi)
+  Priority C ................. remaining lessons + all scam stories (no video)
+  Marathi videos ............. 0 (deliberately excluded for initial release)
+  Already-configured videos .. 9 lesson videos (English) + 10 /watch tutorial videos (untouched)
+
+--------------------------------------------------------------------------------
+4. PART 3 — FINAL MANUAL CHECKLIST
+--------------------------------------------------------------------------------
+
+4.1 AUDIO — DO FIRST (Priority A: 20 clips, Hindi + Marathi)
+ 1. story-fake-bank-officer      -> Hindi + Marathi -> Record: complete story narration (title + story + warning signs + key lesson)
+ 2. story-upi-request            -> Hindi + Marathi -> Record: complete story narration
+ 3. story-electricity-bill       -> Hindi + Marathi -> Record: complete story narration
+ 4. story-digital-arrest         -> Hindi + Marathi -> Record: complete story narration
+ 5. story-fake-customer-care     -> Hindi + Marathi -> Record: complete story narration
+ 6. story-whatsapp-impersonation -> Hindi + Marathi -> Record: complete story narration
+ 7. story-kbc-lottery            -> Hindi + Marathi -> Record: complete story narration
+ 8. pay-upi-pin                  -> Hindi + Marathi -> Record: complete lesson (title + description + all 5 steps)
+ 9. net-otp                      -> Hindi + Marathi -> Record: complete lesson (title + description + all 5 steps)
+10. basics-understanding-phone   -> Hindi + Marathi -> Record: complete lesson (title + description + all 5 steps)
+
+Save each file to public/audio/<lang>/<key>.mp3 and add the key to that
+language's array in public/audio/manifest.json.
+
+AUDIO — DO SECOND (Priority B: 16 clips, Hindi + Marathi)
+ 1. pay-what-is-upi    -> Hindi + Marathi -> Record: complete lesson
+ 2. pay-failed-refund  -> Hindi + Marathi -> Record: complete lesson
+ 3. pay-qr-code        -> Hindi + Marathi -> Record: complete lesson
+ 4. basics-screen-lock -> Hindi + Marathi -> Record: complete lesson
+ 5. wa-send-message    -> Hindi + Marathi -> Record: complete lesson
+ 6. wa-voice-message   -> Hindi + Marathi -> Record: complete lesson
+ 7. wa-video-call      -> Hindi + Marathi -> Record: complete lesson
+ 8. net-safe-browsing  -> Hindi + Marathi -> Record: complete lesson
+
+4.2 YOUTUBE — DO FIRST (Priority A: search Hindi first; if nothing good, use English)
+ 1. basics-understanding-phone -> Search Hindi -> Keywords: "बुजुर्गों के लिए स्मार्टफोन कैसे चलाएं" / "smartphone basics for seniors hindi"
+ 2. basics-touchscreen         -> Search Hindi -> Keywords: "मोबाइल में टच स्क्रीन कैसे चलाएं"
+ 3. basics-large-text          -> Search Hindi -> Keywords: "फोन के अक्षर बड़े कैसे करें"
+ 4. basics-screen-lock         -> Search Hindi -> Keywords: "फोन में पिन लॉक कैसे लगाएं"
+ 5. basics-taking-photos       -> Search Hindi -> Keywords: "मोबाइल से फोटो कैसे खींचें"
+ 6. wa-send-message            -> Search Hindi -> Keywords: "व्हाट्सएप पर मैसेज कैसे भेजें"
+ 7. wa-voice-message           -> Search Hindi -> Keywords: "व्हाट्सएप वॉइस मैसेज कैसे भेजें"
+ 8. wa-video-call              -> Search Hindi -> Keywords: "व्हाट्सएप वीडियो कॉल कैसे करें"
+ 9. pay-qr-code                -> Search Hindi -> Keywords: "क्यूआर कोड स्कैन करके पेमेंट कैसे करें"
+10. svc-navigation             -> Search Hindi -> Keywords: "गूगल मैप्स से रास्ता कैसे देखें"
+
+YOUTUBE — DO SECOND (Priority B)
+ 1. pay-check-balance   -> Search Hindi -> Keywords: "यूपीआई ऐप से बैंक बैलेंस कैसे देखें"
+ 2. net-search-google   -> Search Hindi -> Keywords: "गूगल पर बोलकर सर्च कैसे करें"
+ 3. net-update-apps     -> Search Hindi -> Keywords: "प्ले स्टोर से ऐप अपडेट कैसे करें"
+ 4. basics-contacts     -> Search Hindi -> Keywords: "फोन में नंबर सेव कैसे करें"
+
+When you pick a video, only its ID goes into video.hi of that lesson in
+src/data/lessons.ts (English fallback already exists for 5 of the A items).
+
+4.3 DON'T BOTHER WITH
+Audio (browser TTS is fine / not wired):
+- Lessons: basics-touchscreen, basics-volume, basics-large-text, basics-torch,
+  basics-contacts, wa-delete-mistake, wa-group-privacy, pay-check-balance,
+  net-wifi-vs-data, net-search-google, net-update-apps, svc-navigation,
+  svc-digilocker, svc-doctor-appointment, svc-utility-bills, svc-senior-schemes
+- All dictionary entries (no audioKey in dictionary.tsx)
+- Emergency page, Onboarding, quizzes, Scam-or-Safe scenarios, HELP_TOPICS
+  (no listen button / audioKey wired in current code — recording them would be unused)
+- Any English audio (en-IN browser TTS is acceptable)
+
+Videos:
+- basics-volume, basics-torch (trivial single actions)
+- wa-delete-mistake, wa-group-privacy (short setting toggles)
+- pay-what-is-upi, pay-upi-pin, pay-failed-refund, net-otp, net-wifi-vs-data
+  (concept/warning content — audio + text is better)
+- svc-digilocker, svc-doctor-appointment, svc-utility-bills, svc-senior-schemes
+  (defer to a later release)
+- All 7 scam stories (narrative — no video value)
+- Marathi video searches (excluded for initial release)
+- The existing 9 English lesson videos and the 10 /watch TUTORIALS videos:
+  already configured, leave them as they are.
+
+================================================================================
+END OF AUDIT
+================================================================================
