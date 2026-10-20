@@ -66,14 +66,14 @@ function DictionaryPage() {
       />
 
       {/* Search Bar */}
-      <label className="flex items-center gap-3 rounded-2xl border-2 border-border bg-card px-4 shadow-card">
+      <label className="flex min-w-0 items-center gap-3 rounded-2xl border-2 border-border bg-card px-4 shadow-card">
         <Search aria-hidden="true" className="size-6 text-muted-foreground shrink-0" />
         <input
           value={query}
           onChange={(e) => setQuery(e.target.value)}
           placeholder={t("searchDictionary")}
           aria-label={t("searchDictionary")}
-          className="min-h-16 w-full bg-transparent text-xl outline-none"
+          className="min-h-16 w-full min-w-0 max-w-full bg-transparent text-xl outline-none"
         />
         {query ? (
           <button

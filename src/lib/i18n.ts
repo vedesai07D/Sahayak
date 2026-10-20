@@ -56,6 +56,7 @@ const en: Dict = {
   resume: "Resume",
   stop: "Stop",
   restart: "Restart",
+  reset: "Reset",
   markComplete: "Mark as Complete",
   completed: "Completed",
   save: "Save",
@@ -329,6 +330,27 @@ const en: Dict = {
   communityAuthFailed: "Sign in failed. Please check your email and password.",
   communityDelete: "Delete",
   communityConfirmDelete: "Delete this post?",
+
+  // Quiz, progress bars, audio status and video additions
+  quizPerfect: "Wonderful! You got every answer right! 🎉",
+  quizGreat: "Well done! You got most of the answers right! 👏",
+  quizFew: "Good try! Read the lesson once more and try again. 💪",
+  quizNoQuestions: "This quiz is being prepared. Please come back soon!",
+  testYourself: "Test yourself",
+  progressContinue: "Continue",
+  nextWord: "Next",
+  allLessonsDone: "All lessons done 🎉",
+  audioPlaying: "Playing…",
+  audioPaused: "Paused",
+  openOnYouTube: "Open on YouTube",
+  moreVideos: "More videos",
+  hindiVideoChip: "🇮🇳 Hindi video",
+  catBasics: "Basics",
+  catWhatsApp: "WhatsApp",
+  catPayments: "Payments",
+  catInternet: "Internet",
+  catServices: "Services",
+  catSafety: "Safety",
 };
 
 const hi: Dict = {
@@ -363,6 +385,7 @@ const hi: Dict = {
   resume: "जारी रखें",
   stop: "बंद करें",
   restart: "फिर से",
+  reset: "रीसेट",
   markComplete: "पूरा हुआ चिह्नित करें",
   completed: "पूरा हुआ",
   save: "सहेजें",
@@ -636,6 +659,27 @@ const hi: Dict = {
   communityAuthFailed: "साइन इन नहीं हो सका। ईमेल और पासवर्ड जाँचें।",
   communityDelete: "मिटाएँ",
   communityConfirmDelete: "यह पोस्ट मिटाएँ?",
+
+  // क्विज़, प्रगति पट्टी, आवाज़ स्थिति और वीडियो जोड़
+  quizPerfect: "बहुत बढ़िया! आपने सभी उत्तर सही दिए! 🎉",
+  quizGreat: "शाबाश! आपने ज़्यादातर उत्तर सही दिए! 👏",
+  quizFew: "अच्छी कोशिश! पाठ एक बार फिर पढ़कर दोबारा कोशिश करें। 💪",
+  quizNoQuestions: "यह क्विज़ तैयार किया जा रहा है। कृपया जल्द वापस आएँ!",
+  testYourself: "खुद को परखें",
+  progressContinue: "आगे बढ़ें",
+  nextWord: "अगला",
+  allLessonsDone: "सभी पाठ पूरे हुए 🎉",
+  audioPlaying: "चल रहा है…",
+  audioPaused: "रुका हुआ",
+  openOnYouTube: "YouTube पर खोलें",
+  moreVideos: "और वीडियो",
+  hindiVideoChip: "🇮🇳 हिंदी वीडियो",
+  catBasics: "मूल बातें",
+  catWhatsApp: "व्हाट्सएप",
+  catPayments: "भुगतान",
+  catInternet: "इंटरनेट",
+  catServices: "सेवाएँ",
+  catSafety: "सुरक्षा",
 };
 
 const mr: Dict = {
@@ -670,6 +714,7 @@ const mr: Dict = {
   resume: "पुढे",
   stop: "बंद करा",
   restart: "पुन्हा",
+  reset: "रीसेट",
   markComplete: "पूर्ण झाले",
   completed: "पूर्ण",
   save: "जतन करा",
@@ -946,6 +991,27 @@ const mr: Dict = {
   communityAuthFailed: "साइन इन होऊ शकले नाही. ईमेल आणि पासवर्ड तपासा.",
   communityDelete: "काढा",
   communityConfirmDelete: "ही पोस्ट काढून टाकायची?",
+
+  // प्रश्नमंजुषा, प्रगती पट्ट्या, आवाज स्थिती आणि व्हिडिओ भर
+  quizPerfect: "उत्तम! तुम्ही सर्व उत्तरे बरोबर दिली! 🎉",
+  quizGreat: "शाबास! तुम्ही बहुतेक उत्तरे बरोबर दिली! 👏",
+  quizFew: "चांगला प्रयत्न! धडा आणखी एकदा वाचून पुन्हा प्रयत्न करा. 💪",
+  quizNoQuestions: "ही प्रश्नमंजुषा तयार होत आहे. कृपया लवकरच पुन्हा भेट द्या!",
+  testYourself: "स्वतःला तपासा",
+  progressContinue: "पुढे चला",
+  nextWord: "पुढील",
+  allLessonsDone: "सर्व धडे पूर्ण 🎉",
+  audioPlaying: "सुरू आहे…",
+  audioPaused: "थांबवले",
+  openOnYouTube: "YouTube वर उघडा",
+  moreVideos: "आणखी व्हिडिओ",
+  hindiVideoChip: "🇮🇳 हिंदी व्हिडिओ",
+  catBasics: "मूलतत्त्वे",
+  catWhatsApp: "व्हॉट्सअ‍ॅप",
+  catPayments: "पेमेंट",
+  catInternet: "इंटरनेट",
+  catServices: "सेवा",
+  catSafety: "सुरक्षा",
 };
 
 const dicts: Record<Lang, Dict> = { en, hi, mr };

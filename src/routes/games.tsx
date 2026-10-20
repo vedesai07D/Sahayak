@@ -4,7 +4,7 @@ import { ArrowLeft, ClipboardCheck, HelpCircle, ShieldCheck, Type } from "lucide
 import { Chip, ElderButton, LargeCard, PageHeader } from "@/components/elder";
 import { QuizPanel } from "@/components/QuizPanel";
 import { useApp } from "@/lib/store";
-import { pick, pickList } from "@/lib/i18n";
+import { pick } from "@/lib/i18n";
 import { QUIZZES, SAFETY_QUESTIONS, SCENARIOS, WORD_PUZZLES } from "@/data/content";
 
 export const Route = createFileRoute("/games")({
@@ -124,7 +124,7 @@ function WordPuzzle() {
       <div className="mt-4 grid gap-3">
         {q.options.map((o, n) => (
           <ElderButton
-            key={o}
+            key={n}
             variant={
               picked === null ? "outline" : n === q.answer ? "primary" : n === picked ? "danger" : "outline"
             }
@@ -184,7 +184,13 @@ function QuizChallenge() {
       >
         <ArrowLeft aria-hidden="true" /> {t("chooseQuiz")}
       </button>
-      <QuizPanel quizId={quiz.id} title={pick(quiz.title, state.lang)} />
+      {/* key keeps one stable panel instance per quiz; onBack returns to the list */}
+      <QuizPanel
+        key={quiz.id}
+        quizId={quiz.id}
+        title={pick(quiz.title, state.lang)}
+        onBack={() => setQuizId(null)}
+      />
     </div>
   );
 }

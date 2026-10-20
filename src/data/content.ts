@@ -8,140 +8,449 @@ export type Tutorial = {
   description: Localized;
   videoId: string;
   category: string;
-  duration: string;
+  /** Real durations are unknown, so the field is optional — never invented. */
+  duration?: string;
   difficulty: "beginner" | "comfortable" | "confident";
 };
 
+/** One entry per unique verified YouTube video used in the lessons. */
 export const TUTORIALS: Tutorial[] = [
+  /* ── Basics ── */
   {
-    id: "vid-whatsapp-basics",
-    title: { en: "WhatsApp for beginners", hi: "शुरुआती लोगों के लिए व्हाट्सएप", mr: "नवशिक्यांसाठी व्हॉट्सअ‍ॅप" },
-    description: {
-      en: "A gentle walk-through of messages, voice notes, photos and calls.",
-      hi: "संदेश लिखना, आवाज़ भेजना, फ़ोटो और कॉल करने की सरल सीख।",
-      mr: "मेसेज, व्हॉइस मेसेज, फोटो आणि कॉल समजून घेण्याची सोपी पद्धत.",
+    id: "vid-phone-basics",
+    title: {
+      en: "Smartphone basics explained slowly",
+      hi: "बुजुर्गों के लिए स्मार्टफ़ोन कैसे चलाएं",
+      mr: "ज्येष्ठांसाठी स्मार्टफोन कसा चालवावा",
     },
-    videoId: "gwSHqPFP5Wg",
-    category: "WhatsApp",
-    duration: "8 min",
-    difficulty: "beginner",
-  },
-  {
-    id: "vid-upi-intro",
-    title: { en: "How UPI payments work", hi: "यूपीआई भुगतान कैसे काम करता है", mr: "यूपीआय पेमेंट कसे चालते" },
     description: {
-      en: "Sending and receiving money safely with a UPI app.",
-      hi: "यूपीआई ऐप से सुरक्षित रूप से पैसे भेजना और मँगवाना।",
-      mr: "यूपीआय अ‍ॅपवरून सुरक्षितपणे पैसे पाठवणे आणि स्वीकारणे.",
+      en: "Buttons, touch screen and daily apps, explained slowly and simply.",
+      hi: "बटन, टच स्क्रीन और रोज़ के ऐप — धीरे-धीरे और आसान भाषा में।",
+      mr: "बटणे, टच स्क्रीन आणि रोजचे अ‍ॅप्स — हळूहळू आणि सोप्या भाषेत.",
     },
-    videoId: "TnZbdHtTgAA",
-    category: "Payments",
-    duration: "6 min",
-    difficulty: "beginner",
-  },
-  {
-    id: "vid-google-maps",
-    title: { en: "Using Google Maps", hi: "गूगल मैप्स का उपयोग", mr: "गुगल मॅप्स वापरणे" },
-    description: {
-      en: "Search a place and follow spoken step-by-step directions.",
-      hi: "रास्ता ढूँढ़ें और बोलकर दिशा बताने वाली सुविधा का उपयोग करें।",
-      mr: "रस्ता शोधा आणि बोलून मार्गदर्शन मिळवा.",
-    },
-    videoId: "sGDHkbAmqzc",
-    category: "Services",
-    duration: "9 min",
-    difficulty: "comfortable",
-  },
-  {
-    id: "vid-video-call",
-    title: { en: "Making a video call", hi: "परिवार को वीडियो कॉल करना", mr: "कुटुंबाला व्हिडिओ कॉल करणे" },
-    description: {
-      en: "Talk face to face with your children and grandchildren.",
-      hi: "अपनों से आमने-सामने वीडियो पर बात करें।",
-      mr: "मुलांशी आणि नातवंडांशी समोरासमोर बोला.",
-    },
-    videoId: "0v8YDvRHtLU",
-    category: "WhatsApp",
-    duration: "5 min",
-    difficulty: "beginner",
-  },
-  {
-    id: "vid-online-scams",
-    title: { en: "How to identify online scams", hi: "ऑनलाइन ठगी कैसे पहचानें", mr: "ऑनलाइन फसवणूक कशी ओळखावी" },
-    description: {
-      en: "Common tricks used by scammers and how to spot them early.",
-      hi: "ठगों के आम हथकंडे और उनसे बचने के आसान नियम।",
-      mr: "फसवणुकीचे सामान्य प्रकार आणि सुरुवातीलाच कसे सावध राहावे.",
-    },
-    videoId: "R2b1U0kR5bA",
-    category: "Safety",
-    duration: "10 min",
-    difficulty: "comfortable",
-  },
-  {
-    id: "vid-smartphone-basics",
-    title: { en: "Smartphone basics explained slowly", hi: "स्मार्टफ़ोन की मूल बातें", mr: "स्मार्टफोनची मूलतत्त्वे" },
-    description: {
-      en: "Buttons, screens, settings and apps explained slowly.",
-      hi: "फ़ोन के बटन, स्क्रीन और मुख्य ऐप धीरे-धीरे समझें।",
-      mr: "फोनची बटने, स्क्रीन आणि मुख्य अ‍ॅप्स समजून घ्या.",
-    },
-    videoId: "u2ZMr0Cf4ZM",
+    videoId: "uQ1MA17A0ZA",
     category: "Basics",
-    duration: "12 min",
     difficulty: "beginner",
   },
   {
-    id: "vid-internet-safety",
-    title: { en: "Internet safety basics", hi: "इंटरनेट सुरक्षा के नियम", mr: "इंटरनेट सुरक्षेचे नियम" },
-    description: {
-      en: "Passwords, unknown links and safe browsing habits.",
-      hi: "पासवर्ड, अनजान लिंक और सुरक्षित इंटरनेट चलाने की अच्छी आदतें।",
-      mr: "पासवर्ड, अनोळखी लिंक्स आणि सुरक्षित इंटरनेट वापराच्या चांगल्या सवयी.",
+    id: "vid-large-text",
+    title: {
+      en: "Making text larger and easier to read",
+      hi: "फोन के अक्षर बड़े कैसे करें",
+      mr: "फोनवरील अक्षरे मोठी कशी करावीत",
     },
-    videoId: "aO858HyFbKI",
+    description: {
+      en: "Increase the font size so reading is comfortable.",
+      hi: "फ़ॉन्ट साइज़ बढ़ाएँ ताकि पढ़ना आसान हो जाए।",
+      mr: "फॉन्ट साइज वाढवा जेणेकरून वाचणे सोपे होईल.",
+    },
+    videoId: "a6mIcB4Ry8c",
+    category: "Basics",
+    difficulty: "beginner",
+  },
+  {
+    id: "vid-screen-lock",
+    title: {
+      en: "Setting a secure screen lock",
+      hi: "पिन लॉक कैसे लगाएं",
+      mr: "पिन लॉक कसा लावावा",
+    },
+    description: {
+      en: "Protect your phone with a simple PIN lock.",
+      hi: "एक आसान पिन से अपने फ़ोन को सुरक्षित रखें।",
+      mr: "एका सोप्या पिनने तुमचा फोन सुरक्षित ठेवा.",
+    },
+    videoId: "GOheHJedWHI",
+    category: "Basics",
+    difficulty: "beginner",
+  },
+  {
+    id: "vid-photos",
+    title: {
+      en: "Taking and viewing photos",
+      hi: "मोबाइल से फोटो कैसे खींचें",
+      mr: "मोबाईलने फोटो कसे काढावेत",
+    },
+    description: {
+      en: "Take clear photos of family and documents, and view them.",
+      hi: "परिवार और कागज़ों की साफ़ फ़ोटो लें और उन्हें देखें।",
+      mr: "कुटुंब आणि कागदपत्रांचे स्पष्ट फोटो काढा आणि पाहा.",
+    },
+    videoId: "dL08ykVuuhQ",
+    category: "Basics",
+    difficulty: "beginner",
+  },
+  {
+    id: "vid-torch",
+    title: {
+      en: "Using the flashlight (Torch)",
+      hi: "फ़ोन की टॉर्च कैसे जलाएँ",
+      mr: "फोनची टॉर्च कशी लावावी",
+    },
+    description: {
+      en: "Turn the phone torch on and off in two taps.",
+      hi: "दो टैप में फ़ोन की टॉर्च जलाएँ और बुझाएँ।",
+      mr: "दोन टॅपमध्ये फोनची टॉर्च लावा आणि विझवा.",
+    },
+    videoId: "hzgZGUOuvvg",
+    category: "Basics",
+    difficulty: "beginner",
+  },
+  {
+    id: "vid-volume",
+    title: {
+      en: "Adjusting volume for calls and videos",
+      hi: "फ़ोन की आवाज़ कैसे बढ़ाएँ",
+      mr: "फोनचा आवाज कसा वाढवावा",
+    },
+    description: {
+      en: "Make rings, calls and video sound louder or softer.",
+      hi: "घंटी, कॉल और वीडियो की आवाज़ कम या ज़्यादा करना सीखें।",
+      mr: "रिंग, कॉल आणि व्हिडिओचा आवाज कमी किंवा जास्त करणे शिका.",
+    },
+    videoId: "RK9IYSndyLw",
+    category: "Basics",
+    difficulty: "beginner",
+  },
+  {
+    id: "vid-contacts",
+    title: {
+      en: "Saving phone numbers with clear names",
+      hi: "फोन में नंबर सेव कैसे करें",
+      mr: "फोनमध्ये नंबर कसे जतन करावेत",
+    },
+    description: {
+      en: "Save family and doctor numbers with easy names.",
+      hi: "परिवार और डॉक्टर के नंबर आसान नाम से सहेजें।",
+      mr: "कुटुंब आणि डॉक्टरांचे नंबर सोप्या नावाने जतन करा.",
+    },
+    videoId: "A2KwGm6Yr4E",
+    category: "Basics",
+    difficulty: "beginner",
+  },
+  /* ── WhatsApp ── */
+  {
+    id: "vid-wa-message",
+    title: {
+      en: "Sending a WhatsApp text message",
+      hi: "व्हाट्सएप पर मैसेज कैसे भेजें",
+      mr: "व्हॉट्सअ‍ॅपवर मेसेज कसा पाठवावा",
+    },
+    description: {
+      en: "Open a chat, type and send your first message.",
+      hi: "चैट खोलें, लिखें और अपना संदेश भेजें।",
+      mr: "चॅट उघडा, लिहा आणि तुमचा मेसेज पाठवा.",
+    },
+    videoId: "bitdnzMEcEw",
+    category: "WhatsApp",
+    difficulty: "beginner",
+  },
+  {
+    id: "vid-wa-voice",
+    title: {
+      en: "Sending a voice message",
+      hi: "व्हाट्सएप वॉइस मैसेज कैसे भेजें",
+      mr: "व्हॉट्सअ‍ॅप व्हॉइस मेसेज कसा पाठवावा",
+    },
+    description: {
+      en: "No typing needed — speak your message and send it.",
+      hi: "टाइप की ज़रूरत नहीं — बोलकर संदेश भेजें।",
+      mr: "टाइप करण्याची गरज नाही — बोलून मेसेज पाठवा.",
+    },
+    videoId: "PZzIczw2bdc",
+    category: "WhatsApp",
+    difficulty: "beginner",
+  },
+  {
+    id: "vid-wa-video-call",
+    title: {
+      en: "Making a video call to see your family",
+      hi: "व्हाट्सएप वीडियो कॉल कैसे करें",
+      mr: "व्हॉट्सअ‍ॅप व्हिडिओ कॉल कसा करावा",
+    },
+    description: {
+      en: "See your children and grandchildren face to face.",
+      hi: "बच्चों और नाती-पोतों को आमने-सामने देखकर बात करें।",
+      mr: "मुलांना आणि नातवंडांना समोरासमोर पाहून बोला.",
+    },
+    videoId: "SoJ5sp1n5OQ",
+    category: "WhatsApp",
+    difficulty: "beginner",
+  },
+  {
+    id: "vid-wa-delete",
+    title: {
+      en: "Deleting a message sent by mistake",
+      hi: "व्हाट्सएप पर गलती से भेजा संदेश कैसे मिटाएँ",
+      mr: "व्हॉट्सअ‍ॅपवर चुकीने पाठवलेला मेसेज कसा काढावा",
+    },
+    description: {
+      en: "Delete a wrong message for everyone within minutes.",
+      hi: "गलत संदेश कुछ मिनटों में सबके लिए मिटा दें।",
+      mr: "चुकीचा मेसेज काही मिनिटांत सर्वांसाठी काढून टाका.",
+    },
+    videoId: "0fe9nzUHEHE",
+    category: "WhatsApp",
+    difficulty: "comfortable",
+  },
+  {
+    id: "vid-wa-groups",
+    title: {
+      en: "Stopping strangers from adding you to groups",
+      hi: "व्हाट्सएप ग्रुप प्राइवेसी सेटिंग कैसे करें",
+      mr: "व्हॉट्सअ‍ॅप ग्रुप प्रायव्हसी सेटिंग कशी करावी",
+    },
+    description: {
+      en: "Only your saved contacts can add you to groups.",
+      hi: "सिर्फ़ आपके संपर्क ही आपको ग्रुप में जोड़ सकें — सेटिंग करें।",
+      mr: "फक्त तुमचे संपर्कच तुम्हाला ग्रुपमध्ये जोडू शकतील — सेटिंग करा.",
+    },
+    videoId: "G8OtkY3dPfY",
+    category: "WhatsApp",
+    difficulty: "comfortable",
+  },
+  /* ── Payments ── */
+  {
+    id: "vid-upi-pin",
+    title: {
+      en: "The Golden Rule: PIN is ONLY to send money",
+      hi: "यूपीआई पिन का सही उपयोग कैसे करें",
+      mr: "यूपीआय पिनचा योग्य वापर कसा करावा",
+    },
+    description: {
+      en: "Why your UPI PIN must never be shared with anyone.",
+      hi: "यूपीआई पिन किसी को क्यों नहीं बताना चाहिए — आसान भाषा में।",
+      mr: "यूपीआय पिन कोणालाही का सांगू नये — सोप्या भाषेत.",
+    },
+    videoId: "i7DcdpKxPsA",
+    category: "Payments",
+    difficulty: "beginner",
+  },
+  {
+    id: "vid-qr-pay",
+    title: {
+      en: "Scanning a shop QR code to pay",
+      hi: "क्यूआर कोड स्कैन करके पेमेंट कैसे करें",
+      mr: "क्यूआर कोड स्कॅन करून पेमेंट कसे करावे",
+    },
+    description: {
+      en: "Pay at any shop by scanning the QR code with your phone.",
+      hi: "फ़ोन से क्यूआर कोड स्कैन करके किसी भी दुकान पर पैसे दें।",
+      mr: "फोनने क्यूआर कोड स्कॅन करून कोणत्याही दुकानात पैसे द्या.",
+    },
+    videoId: "44cq5JQUBtA",
+    category: "Payments",
+    difficulty: "beginner",
+  },
+  {
+    id: "vid-qr-pay-2",
+    title: {
+      en: "Paying with a QR code: another easy way",
+      hi: "क्यूआर कोड से पेमेंट की एक और आसान विधि",
+      mr: "क्यूआर कोडने पेमेंटची आणखी एक सोपी पद्धत",
+    },
+    description: {
+      en: "A second simple demonstration of paying with QR codes.",
+      hi: "क्यूआर कोड से पैसे देने का दूसरा आसान उदाहरण।",
+      mr: "क्यूआर कोडने पैसे देण्याचे दुसरे सोपे उदाहरण.",
+    },
+    videoId: "0mVT6f9e-M0",
+    category: "Payments",
+    difficulty: "beginner",
+  },
+  {
+    id: "vid-balance",
+    title: {
+      en: "Checking your bank balance safely",
+      hi: "यूपीआई ऐप से बैंक बैलेंस कैसे देखें",
+      mr: "यूपीआय अ‍ॅपने बँक शिल्लक कशी पाहावी",
+    },
+    description: {
+      en: "See the money in your account from home, safely.",
+      hi: "घर बैठे खाते की राशि सुरक्षित रूप से देखें।",
+      mr: "घरबसल्या खात्यातील रक्कम सुरक्षितपणे पाहा.",
+    },
+    videoId: "HUztgY119Mg",
+    category: "Payments",
+    difficulty: "beginner",
+  },
+  {
+    id: "vid-balance-2",
+    title: {
+      en: "More ways to check your bank balance",
+      hi: "बैंक बैलेंस जाँचने के और आसान तरीके",
+      mr: "बँक शिल्लक तपासण्याचे आणखी सोपे मार्ग",
+    },
+    description: {
+      en: "Another simple way to see your balance.",
+      hi: "बैलेंस देखने का एक और आसान तरीका।",
+      mr: "शिल्लक पाहण्याचा आणखी एक सोपा मार्ग.",
+    },
+    videoId: "VOpd9afWZIA",
+    category: "Payments",
+    difficulty: "beginner",
+  },
+  {
+    id: "vid-balance-3",
+    title: {
+      en: "Checking balance: one more method",
+      hi: "बैंक बैलेंस देखने का एक और तरीका",
+      mr: "बँक शिल्लक पाहण्याचा आणखी एक मार्ग",
+    },
+    description: {
+      en: "A further demonstration of checking your balance.",
+      hi: "बैलेंस जाँचने का और विस्तार से उदाहरण।",
+      mr: "शिल्लक तपासण्याचे अधिक विस्तृत उदाहरण.",
+    },
+    videoId: "kjNRJRIUhS8",
+    category: "Payments",
+    difficulty: "beginner",
+  },
+  {
+    id: "vid-failed-payment",
+    title: {
+      en: "What to do if a payment gets stuck",
+      hi: "अटका हुआ पेमेंट कैसे ठीक करें",
+      mr: "अडकलेले पेमेंट कसे सोडवावे",
+    },
+    description: {
+      en: "Calm, correct steps when money is deducted but not received.",
+      hi: "पैसे कटकर अटक जाएँ तो शांति से सही कदम उठाएँ।",
+      mr: "पैसे कापून अडकल्यास शांतपणे योग्य पावले उचला.",
+    },
+    videoId: "1OpzcIyNOI0",
+    category: "Payments",
+    difficulty: "comfortable",
+  },
+  /* ── Internet ── */
+  {
+    id: "vid-wifi-data",
+    title: {
+      en: "Wi-Fi vs Mobile Data",
+      hi: "वाई-फ़ाई और मोबाइल डेटा में अंतर समझें",
+      mr: "वाय-फाय आणि मोबाईल डेटा यातील फरक समजून घ्या",
+    },
+    description: {
+      en: "When to use home Wi-Fi and when to use your SIM data.",
+      hi: "घर का वाई-फ़ाई कब और सिम का डेटा कब चलाएँ।",
+      mr: "घरचे वाय-फाय केव्हा आणि सिमचा डेटा केव्हा वापरावा.",
+    },
+    videoId: "AgZWcWJe3yA",
     category: "Internet",
-    duration: "7 min",
+    difficulty: "beginner",
+  },
+  {
+    id: "vid-otp",
+    title: {
+      en: "What is an OTP and why you must never share it",
+      hi: "ओटीपी क्या है और इसे कैसे सुरक्षित रखें",
+      mr: "ओटीपी म्हणजे काय आणि तो सुरक्षित कसा ठेवावा",
+    },
+    description: {
+      en: "The one habit that stops most OTP fraud.",
+      hi: "एक आदत जो ओटीपी की लगभग हर ठगी रोक देती है।",
+      mr: "एक सवय जी ओटीपीची जवळपास सर्व फसवणूक रोखते.",
+    },
+    videoId: "Mnj-LhF2nug",
+    category: "Internet",
+    difficulty: "beginner",
+  },
+  {
+    id: "vid-voice-search",
+    title: {
+      en: "Searching safely on Google with voice",
+      hi: "गूगल पर बोलकर सर्च कैसे करें",
+      mr: "गुगलवर बोलून शोध कसा घ्यावा",
+    },
+    description: {
+      en: "Ask Google anything by speaking, in your own language.",
+      hi: "गूगल से अपनी भाषा में बोलकर कुछ भी पूछें।",
+      mr: "गुगलला तुमच्या भाषेत बोलून काहीही विचारा.",
+    },
+    videoId: "dqnxgbC_xo8",
+    category: "Internet",
+    difficulty: "beginner",
+  },
+  {
+    id: "vid-safe-browsing",
+    title: {
+      en: "Recognizing safe websites and links",
+      hi: "सुरक्षित इंटरनेट कैसे चलाएँ",
+      mr: "सुरक्षित इंटरनेट कसे वापरावे",
+    },
+    description: {
+      en: "Spot genuine sites and avoid fake links.",
+      hi: "असली वेबसाइट पहचानें और फ़र्ज़ी लिंक से बचें।",
+      mr: "खरी वेबसाइट ओळखा आणि बनावट लिंक टाळा.",
+    },
+    videoId: "gXoSkk73Bu0",
+    category: "Internet",
     difficulty: "comfortable",
   },
   {
-    id: "vid-qr-payments",
-    title: { en: "Scanning a QR code to pay", hi: "क्यूआर कोड स्कैन कर भुगतान करना", mr: "क्यूआर कोड स्कॅन करून पेमेंट करणे" },
-    description: {
-      en: "Paying at a shop or pharmacy with your phone camera.",
-      hi: "दुकान या दवाखाने में कैमरे से क्यूआर स्कैन कर पैसे देना।",
-      mr: "दुकानात फोनच्या कॅमेऱ्याने क्यूआर स्कॅन करून पैसे भरणे.",
+    id: "vid-update-apps",
+    title: {
+      en: "Updating apps safely on Wi-Fi",
+      hi: "प्ले स्टोर से ऐप अपडेट कैसे करें",
+      mr: "प्ले स्टोअरवरून अ‍ॅप कसे अपडेट करावे",
     },
-    videoId: "kFVGvHDh6Kk",
-    category: "Payments",
-    duration: "5 min",
-    difficulty: "beginner",
+    description: {
+      en: "Keep WhatsApp and bank apps safe with updates.",
+      hi: "अपडेट करके व्हाट्सएप और बैंक ऐप सुरक्षित रखें।",
+      mr: "अपडेट करून व्हॉट्सअ‍ॅप आणि बँक अ‍ॅप्स सुरक्षित ठेवा.",
+    },
+    videoId: "CkeZ2TKCvPY",
+    category: "Internet",
+    difficulty: "comfortable",
   },
   {
-    id: "vid-otp-fraud",
-    title: { en: "Why you must never share an OTP", hi: "ओटीपी कभी किसी को क्यों न बताएँ", mr: "ओटीपी कोणालाही का सांगू नये" },
-    description: {
-      en: "How OTP fraud happens and how to stop it with one simple habit.",
-      hi: "ओटीपी की ठगी कैसे होती है और एक आदत से खुद को कैसे सुरक्षित रखें।",
-      mr: "ओटीपी फसवणूक कशी होते आणि एका सवयीने कसे सुरक्षित राहावे.",
+    id: "vid-update-apps-2",
+    title: {
+      en: "Keeping your phone apps updated",
+      hi: "फ़ोन के ऐप अपडेट रखने का आसान तरीका",
+      mr: "फोनचे अ‍ॅप्स अपडेट ठेवण्याची सोपी पद्धत",
     },
-    videoId: "0lYRTfF3nJ4",
-    category: "Safety",
-    duration: "6 min",
-    difficulty: "beginner",
+    description: {
+      en: "Another walkthrough of updating your apps.",
+      hi: "ऐप अपडेट करने का दूसरा आसान उदाहरण।",
+      mr: "अ‍ॅप्स अपडेट करण्याचे दुसरे सोपे उदाहरण.",
+    },
+    videoId: "QPMhnBfebQo",
+    category: "Internet",
+    difficulty: "comfortable",
+  },
+  /* ── Services ── */
+  {
+    id: "vid-maps",
+    title: {
+      en: "Finding your way with Google Maps",
+      hi: "गूगल मैप्स से रास्ता कैसे देखें",
+      mr: "गुगल मॅप्सने रस्ता कसा पाहावा",
+    },
+    description: {
+      en: "Search a place and follow spoken directions.",
+      hi: "जगह खोजें और बोलकर बताया गया रास्ता देखें।",
+      mr: "जागा शोधा आणि बोलून सांगितलेला रस्ता पाहा.",
+    },
+    videoId: "nfYLyYtmzW0",
+    category: "Services",
+    difficulty: "comfortable",
   },
   {
-    id: "vid-photos-sharing",
-    title: { en: "Taking and sharing photos", hi: "फ़ोटो लेना और परिवार को भेजना", mr: "फोटो काढणे आणि पाठवणे" },
-    description: {
-      en: "From the camera to your family group easily.",
-      hi: "कैमरे से फ़ोटो खींचकर परिवार के व्हाट्सएप ग्रुप में भेजना।",
-      mr: "कॅमेऱ्याने फोटो काढून कौटुंबिक ग्रुपवर सहज पाठवणे.",
+    id: "vid-digilocker",
+    title: {
+      en: "Keeping documents safely in DigiLocker",
+      hi: "डिजीलॉकर में सरकारी दस्तावेज़ कैसे रखें",
+      mr: "डिजिलॉकरमध्ये सरकारी कागदपत्रे कशी ठेवावीत",
     },
-    videoId: "5eYYtUB9wUY",
-    category: "Basics",
-    duration: "7 min",
-    difficulty: "beginner",
+    description: {
+      en: "Carry Aadhaar and other documents safely on your phone.",
+      hi: "आधार और अन्य ज़रूरी कागज़ फ़ोन में सुरक्षित रखें।",
+      mr: "आधार आणि इतर महत्त्वाची कागदपत्रे फोनमध्ये सुरक्षित ठेवा.",
+    },
+    videoId: "MBVeEDcBCOk",
+    category: "Services",
+    difficulty: "confident",
   },
 ];
 
@@ -160,6 +469,8 @@ export const QUIZZES: { id: string; title: Localized }[] = [
   { id: "quiz-internet", title: { en: "Internet & OTP Safety", hi: "इंटरनेट और ओटीपी सुरक्षा", mr: "इंटरनेट व ओटीपी सुरक्षा" } },
   { id: "quiz-whatsapp", title: { en: "WhatsApp Confidence", hi: "व्हाट्सएप आत्मविश्वास", mr: "व्हॉट्सअ‍ॅप आत्मविश्वास" } },
   { id: "quiz-basics", title: { en: "Smartphone Basics", hi: "स्मार्टफ़ोन मूल बातें", mr: "स्मार्टफोन मूलतत्त्वे" } },
+  { id: "quiz-scams", title: { en: "Spot the Scam", hi: "ठगी पहचानें", mr: "फसवणूक ओळखा" } },
+  { id: "quiz-services", title: { en: "Everyday Services", hi: "ज़रूरी डिजिटल सेवाएँ", mr: "दैनंदिन डिजिटल सेवा" } },
 ];
 
 export const QUIZ_QUESTIONS: QuizQuestion[] = [
@@ -301,6 +612,572 @@ export const QUIZ_QUESTIONS: QuizQuestion[] = [
       en: "Font size in Settings makes all messages, contacts and news comfortably readable.",
       hi: "सेटिंग्स में फॉन्ट साइज़ बड़ा करने से सारे संदेश और नंबर साफ़ दिखने लगते हैं।",
       mr: "सेटिंग्जमधील फॉन्ट साइजने सर्व अक्षरे मोठी आणि वाचण्यास सोपी होतात.",
+    },
+  },
+  /* ── quiz-payments (3 more) ── */
+  {
+    id: "qp4",
+    quizId: "quiz-payments",
+    question: {
+      en: "At a shop, you scan the QR code on the counter. What do you do before entering your PIN?",
+      hi: "दुकान पर काउंटर का क्यूआर कोड स्कैन करने के बाद पिन डालने से पहले आप क्या करेंगे?",
+      mr: "दुकानात काउंटरवरील क्यूआर कोड स्कॅन केल्यावर पिन टाकण्यापूर्वी तुम्ही काय कराल?",
+    },
+    options: {
+      en: ["Enter the PIN quickly so the queue moves", "Check the shopkeeper's name and the exact amount on screen", "Ask the shopkeeper to enter the PIN for you"],
+      hi: ["लाइन न लगे इसलिए जल्दी से पिन डालें", "स्क्रीन पर दुकानदार का नाम और सही राशि जाँचें", "दुकानदार को अपना पिन डालने को कहें"],
+      mr: ["रांग थांबू नये म्हणून पटकन पिन टाका", "स्क्रीनवर दुकानदाराचे नाव आणि अचूक रक्कम तपासा", "दुकानदाराला तुमचा पिन टाकायला सांगा"],
+    },
+    answer: 1,
+    explanation: {
+      en: "Always read the name and amount on your own screen slowly before typing your PIN.",
+      hi: "पिन डालने से पहले अपनी स्क्रीन पर नाम और राशि धीरे-धीरे पढ़ें।",
+      mr: "पिन टाकण्यापूर्वी तुमच्या स्क्रीनवरील नाव आणि रक्कम शांतपणे तपासा.",
+    },
+  },
+  {
+    id: "qp5",
+    quizId: "quiz-payments",
+    question: {
+      en: "An SMS says: 'You won ₹500 cashback. Enter your UPI PIN to claim it.' What do you do?",
+      hi: "एसएमएस आया: 'आपको ₹500 कैशबैक मिला है। पाने के लिए यूपीआई पिन डालें।' आप क्या करेंगे?",
+      mr: "एसएमएस आला: 'तुम्हाला ₹५०० कॅशबॅक मिळाला आहे. मिळवण्यासाठी यूपीआय पिन टाका.' तुम्ही काय कराल?",
+    },
+    options: {
+      en: ["Ignore and delete it — real cashback never needs your PIN", "Enter the PIN in the link", "Reply with your phone number"],
+      hi: ["ध्यान न दें और मिटा दें — सच्चे कैशबैक के लिए कभी पिन नहीं चाहिए", "लिंक पर जाकर पिन डालें", "अपना फ़ोन नंबर भेजें"],
+      mr: ["दुर्लक्ष करा आणि डिलीट करा — खऱ्या कॅशबॅकसाठी कधीही पिन लागत नाही", "लिंकवर जाऊन पिन टाका", "तुमचा फोन नंबर पाठवा"],
+    },
+    answer: 0,
+    explanation: {
+      en: "Your UPI PIN only sends money out. Any message asking for it is a trick.",
+      hi: "यूपीआई पिन से हमेशा पैसे जाते हैं। पिन माँगने वाला कोई भी संदेश ठगी है।",
+      mr: "यूपीआय पिनने नेहमी पैसे जातात. पिन मागणारा कोणताही मेसेज फसवणूक आहे.",
+    },
+  },
+  {
+    id: "qp6",
+    quizId: "quiz-payments",
+    question: {
+      en: "You want to check your bank balance from home. Which is the safe way?",
+      hi: "आप घर बैठे बैंक बैलेंस देखना चाहते हैं। कौन सा तरीका सुरक्षित है?",
+      mr: "तुम्हाला घरबसल्या बँक शिल्लक तपासायची आहे. कोणता मार्ग सुरक्षित आहे?",
+    },
+    options: {
+      en: ["Call a customer care number found on Google search", "Give your account number and OTP to a caller", "Open your own bank app or UPI app and check the balance"],
+      hi: ["गूगल सर्च से मिला कस्टमर केयर नंबर मिलाएँ", "कॉलर को खाता नंबर और ओटीपी बता दें", "अपना बैंक ऐप या यूपीआई ऐप खोलकर बैलेंस देखें"],
+      mr: ["गुगल शोधातून मिळालेल्या कस्टमर केअर नंबरवर फोन करा", "कॉलरला खाते क्रमांक आणि ओटीपी सांगा", "तुमचे स्वतःचे बँक अ‍ॅप किंवा यूपीआय अ‍ॅप उघडून शिल्लक पाहा"],
+    },
+    answer: 2,
+    explanation: {
+      en: "Use only your own official bank or UPI app. Numbers found in searches are often fake.",
+      hi: "केवल अपना आधिकारिक बैंक या यूपीआई ऐप इस्तेमाल करें। सर्च में मिले नंबर अक्सर नकली होते हैं।",
+      mr: "फक्त तुमचे अधिकृत बँक किंवा यूपीआय अ‍ॅप वापरा. शोधात मिळणारे नंबर बहुधा बनावट असतात.",
+    },
+  },
+  /* ── quiz-internet (4 more) ── */
+  {
+    id: "qi3",
+    quizId: "quiz-internet",
+    question: {
+      en: "You want to watch videos at home without using your daily mobile data. What is the best way?",
+      hi: "बिना रोज़ का मोबाइल डेटा खर्च किए घर पर वीडियो देखना है। सबसे अच्छा तरीका क्या है?",
+      mr: "दररोजचा मोबाईल डेटा न वापरता घरी व्हिडिओ पाहायचे आहेत. सर्वोत्तम मार्ग कोणता?",
+    },
+    options: {
+      en: ["Connect your phone to the home Wi-Fi", "Keep mobile data on all day", "Turn the phone off and on again"],
+      hi: ["फ़ोन को घर के वाई-फ़ाई से जोड़ें", "मोबाइल डेटा दिन भर चालू रखें", "फ़ोन बंद करके दोबारा चालू करें"],
+      mr: ["फोन घरातील वाय-फायशी जोडा", "मोबाईल डेटा दिवसभर चालू ठेवा", "फोन बंद करून पुन्हा चालू करा"],
+    },
+    answer: 0,
+    explanation: {
+      en: "Home Wi-Fi does not use your SIM's daily data pack, so videos and calls stay comfortable.",
+      hi: "घर के वाई-फ़ाई से सिम का डेटा पैक खर्च नहीं होता, इसलिए वीडियो आराम से चलते हैं।",
+      mr: "घरातील वाय-फायने सिमचा डेटा पॅक खर्च होत नाही, त्यामुळे व्हिडिओ आरामात चालतात.",
+    },
+  },
+  {
+    id: "qi4",
+    quizId: "quiz-internet",
+    question: {
+      en: "An SMS from an unknown number says: 'You won a prize! Tap this link.' What do you do?",
+      hi: "अनजान नंबर से एसएमएस आया: 'आपने इनाम जीता है! इस लिंक पर दबाएँ।' आप क्या करेंगे?",
+      mr: "अनोळखी नंबरवरून एसएमएस आला: 'तुम्ही बक्षीस जिंकलात! या लिंकवर दाबा.' तुम्ही काय कराल?",
+    },
+    options: {
+      en: ["Tap the link and fill in your details", "Do not tap it — delete the message", "Forward it to all your friends"],
+      hi: ["लिंक पर दबाकर अपनी जानकारी भरें", "लिंक पर न दबाएँ — संदेश मिटा दें", "सभी दोस्तों को भेज दें"],
+      mr: ["लिंकवर दाबून तुमची माहिती भरा", "लिंकवर दाबू नका — मेसेज डिलीट करा", "सर्व मित्रांना पाठवा"],
+    },
+    answer: 1,
+    explanation: {
+      en: "Links from unknown numbers can steal your information. Real prizes never arrive this way.",
+      hi: "अनजान नंबर के लिंक आपकी जानकारी चुरा सकते हैं। असली इनाम इस तरह कभी नहीं आते।",
+      mr: "अनोळखी नंबरवरील लिंक तुमची माहिती चोरू शकतात. खरी बक्षीसे अशी कधीही येत नाहीत.",
+    },
+  },
+  {
+    id: "qi5",
+    quizId: "quiz-internet",
+    question: {
+      en: "You want to know tomorrow's weather without typing. What do you do?",
+      hi: "बिना टाइप किए कल का मौसम जानना है। आप क्या करेंगे?",
+      mr: "टाइप न करता उद्याचे हवामान जाणायचे आहे. तुम्ही काय कराल?",
+    },
+    options: {
+      en: ["Tap the microphone 🎙️ in the Google app and ask by voice", "Send an SMS to the weather office", "Call the police helpline"],
+      hi: ["गूगल ऐप में माइक्रोफ़ोन 🎙️ दबाकर बोलकर पूछें", "मौसम विभाग को एसएमएस भेजें", "पुलिस हेल्पलाइन पर कॉल करें"],
+      mr: ["गुगल अ‍ॅपमधील मायक्रोफोन 🎙️ दाबून बोलून विचारा", "हवामान खात्याला एसएमएस पाठवा", "पोलीस हेल्पलाइनवर फोन करा"],
+    },
+    answer: 0,
+    explanation: {
+      en: "Google's microphone lets you speak your question in your own language.",
+      hi: "गूगल के माइक्रोफ़ोन से आप अपनी भाषा में बोलकर सवाल पूछ सकते हैं।",
+      mr: "गुगलच्या मायक्रोफोनने तुम्ही तुमच्या भाषेत बोलून प्रश्न विचारू शकता.",
+    },
+  },
+  {
+    id: "qi6",
+    quizId: "quiz-internet",
+    question: {
+      en: "The Play Store shows an update for WhatsApp. What should you do?",
+      hi: "प्ले स्टोर पर व्हाट्सएप का अपडेट दिख रहा है। आपको क्या करना चाहिए?",
+      mr: "प्ले स्टोअरवर व्हॉट्सअ‍ॅपचे अपडेट दिसते. तुम्ही काय केले पाहिजे?",
+    },
+    options: {
+      en: ["Ignore it forever", "Uninstall WhatsApp", "Tap Update, ideally while on Wi-Fi"],
+      hi: ["हमेशा के लिए नज़रअंदाज़ करें", "व्हाट्सएप हटा दें", "वाई-फ़ाई पर रहते हुए 'अपडेट' दबाएँ"],
+      mr: ["नेहमी दुर्लक्ष करा", "व्हॉट्सअ‍ॅप काढून टाका", "वाय-फायवर असताना 'अपडेट' दाबा"],
+    },
+    answer: 2,
+    explanation: {
+      en: "Updates fix safety problems. Doing it on Wi-Fi saves your mobile data.",
+      hi: "अपडेट से सुरक्षा की कमियाँ ठीक होती हैं। वाई-फ़ाई पर करने से डेटा बचता है।",
+      mr: "अपडेटने सुरक्षेतील त्रुटी दूर होतात. वाय-फायवर केल्यास डेटा वाचतो.",
+    },
+  },
+  /* ── quiz-whatsapp (5 more) ── */
+  {
+    id: "qw2",
+    quizId: "quiz-whatsapp",
+    question: {
+      en: "You have typed a message in WhatsApp. How do you send it?",
+      hi: "आपने व्हाट्सएप पर संदेश टाइप कर लिया है। उसे कैसे भेजेंगे?",
+      mr: "तुम्ही व्हॉट्सअ‍ॅपवर मेसेज टाइप केला आहे. तो कसा पाठवाल?",
+    },
+    options: {
+      en: ["Tap the red phone button", "Tap the green arrow button", "Tap the camera icon"],
+      hi: ["लाल फ़ोन वाले बटन पर दबाएँ", "हरे तीर वाले बटन पर दबाएँ", "कैमरा के निशान पर दबाएँ"],
+      mr: ["लाल फोन बटणावर दाबा", "हिरव्या बाणाच्या बटणावर दाबा", "कॅमेरा चिन्हावर दाबा"],
+    },
+    answer: 1,
+    explanation: {
+      en: "The green round arrow on the right sends your message.",
+      hi: "दाहिनी ओर का हरा गोल तीर संदेश भेजता है।",
+      mr: "उजव्या बाजूचा हिरवा गोल बाण मेसेज पाठवतो.",
+    },
+  },
+  {
+    id: "qw3",
+    quizId: "quiz-whatsapp",
+    question: {
+      en: "How do you send a voice message on WhatsApp?",
+      hi: "व्हाट्सएप पर आवाज़ संदेश कैसे भेजें?",
+      mr: "व्हॉट्सअ‍ॅपवर व्हॉइस मेसेज कसा पाठवावा?",
+    },
+    options: {
+      en: ["Press and hold the microphone 🎙️ button, speak, then lift your finger", "Type the word 'voice' in the chat", "Take a photo of your phone"],
+      hi: ["माइक्रोफ़ोन 🎙️ बटन दबाकर रखें, बोलें, फिर उंगली उठा लें", "चैट में 'आवाज़' शब्द लिखें", "अपने फ़ोन की फ़ोटो खींचें"],
+      mr: ["मायक्रोफोन 🎙️ बटण दाबून धरा, बोला, मग बोट वर करा", "चॅटमध्ये 'आवाज' हा शब्द लिहा", "तुमच्या फोनचा फोटो काढा"],
+    },
+    answer: 0,
+    explanation: {
+      en: "Hold the green microphone, speak clearly, and let go — the message is sent.",
+      hi: "हरा माइक दबाकर रखें, साफ़ बोलें और छोड़ दें — संदेश चला जाता है।",
+      mr: "हिरवा माइक दाबून धरा, स्पष्ट बोला आणि सोडा — मेसेज पाठवला जातो.",
+    },
+  },
+  {
+    id: "qw4",
+    quizId: "quiz-whatsapp",
+    question: {
+      en: "Which icon starts a video call inside a WhatsApp chat?",
+      hi: "व्हाट्सएप चैट में वीडियो कॉल कौन सा निशान शुरू करता है?",
+      mr: "व्हॉट्सअ‍ॅप चॅटमध्ये व्हिडिओ कॉल कोणत्या चिन्हावरून सुरू होतो?",
+    },
+    options: {
+      en: ["The trash bin 🗑️", "The settings gear ⚙️", "The video camera 📹 at the top"],
+      hi: ["कूड़ेदान 🗑️", "सेटिंग्स गियर ⚙️", "ऊपर बना वीडियो कैमरा 📹"],
+      mr: ["कचराकुंडी 🗑️", "सेटिंग्ज गियर ⚙️", "वरील व्हिडिओ कॅमेरा 📹"],
+    },
+    answer: 2,
+    explanation: {
+      en: "The small video camera at the top right of the chat starts a video call.",
+      hi: "चैट के ऊपर दाईं ओर बना छोटा वीडियो कैमरा वीडियो कॉल शुरू करता है।",
+      mr: "चॅटच्या वर उजवीकडील लहान व्हिडिओ कॅमेरा व्हिडिओ कॉल सुरू करतो.",
+    },
+  },
+  {
+    id: "qw5",
+    quizId: "quiz-whatsapp",
+    question: {
+      en: "You sent a photo to the wrong person by mistake. What do you do right away?",
+      hi: "गलती से किसी ग़लत व्यक्ति को फ़ोटो चली गई। तुरंत क्या करेंगे?",
+      mr: "चुकीने चुकीच्या व्यक्तीला फोटो गेला. लगेच काय कराल?",
+    },
+    options: {
+      en: ["Press and hold the message, tap the trash bin, choose 'Delete for Everyone'", "Switch off the phone", "Send one more photo"],
+      hi: ["संदेश पर दबाकर रखें, कूड़ेदान पर दबाएँ, 'सभी के लिए मिटाएँ' चुनें", "फ़ोन बंद कर दें", "एक और फ़ोटो भेज दें"],
+      mr: ["मेसेजवर दाबून ठेवा, कचराकुंडीवर दाबा, 'सर्वांसाठी डिलीट करा' निवडा", "फोन बंद करा", "आणखी एक फोटो पाठवा"],
+    },
+    answer: 0,
+    explanation: {
+      en: "'Delete for Everyone' removes the message from their phone too, if done quickly.",
+      hi: "'सभी के लिए मिटाएँ' से जल्दी करने पर संदेश सामने वाले के फ़ोन से भी हट जाता है।",
+      mr: "'सर्वांसाठी डिलीट करा' ने लवकर केल्यास मेसेज समोरच्याच्या फोनमधूनही निघतो.",
+    },
+  },
+  {
+    id: "qw6",
+    quizId: "quiz-whatsapp",
+    question: {
+      en: "How do you stop strangers from adding you to WhatsApp groups?",
+      hi: "अजनबियों को व्हाट्सएप ग्रुप में जोड़ने से कैसे रोकें?",
+      mr: "अनोळखी लोकांना व्हॉट्सअ‍ॅप ग्रुपमध्ये जोडण्यापासून कसे रोखावे?",
+    },
+    options: {
+      en: ["Delete WhatsApp from the phone", "Settings → Privacy → Groups → 'My Contacts'", "Ask friends not to add you"],
+      hi: ["फ़ोन से व्हाट्सएप हटा दें", "सेटिंग्स → प्राइवेसी → ग्रुप्स → 'मेरे संपर्क' चुनें", "दोस्तों से न जोड़ने को कहें"],
+      mr: ["फोनमधून व्हॉट्सअ‍ॅप काढून टाका", "सेटिंग्ज → प्रायव्हसी → ग्रुप्स → 'माझे संपर्क' निवडा", "मित्रांना न जोडण्यास सांगा"],
+    },
+    answer: 1,
+    explanation: {
+      en: "This setting allows only your saved contacts to add you to groups.",
+      hi: "इस सेटिंग से केवल आपके सहेजे हुए संपर्क ही आपको ग्रुप में जोड़ पाते हैं।",
+      mr: "या सेटिंगने फक्त तुमचे सेव्ह केलेले संपर्कच तुम्हाला ग्रुपमध्ये जोडू शकतात.",
+    },
+  },
+  /* ── quiz-basics (5 more) ── */
+  {
+    id: "qb2",
+    quizId: "quiz-basics",
+    question: {
+      en: "Why is a screen lock (PIN) important on your phone?",
+      hi: "फ़ोन पर स्क्रीन लॉक (पिन) क्यों ज़रूरी है?",
+      mr: "फोनवर स्क्रीन लॉक (पिन) का महत्त्वाचा आहे?",
+    },
+    options: {
+      en: ["It protects your photos, WhatsApp and bank apps if the phone is misplaced", "It makes the battery charge faster", "It makes the ringtone louder"],
+      hi: ["फ़ोन कहीं छूट जाए तो फ़ोटो, व्हाट्सएप और बैंक ऐप सुरक्षित रहते हैं", "इससे बैटरी जल्दी चार्ज होती है", "इससे घंटी की आवाज़ बढ़ती है"],
+      mr: ["फोन हरवल्यास फोटो, व्हॉट्सअ‍ॅप आणि बँक अ‍ॅप्स सुरक्षित राहतात", "याने बॅटरी लवकर चार्ज होते", "याने रिंगटोन मोठी होते"],
+    },
+    answer: 0,
+    explanation: {
+      en: "A simple PIN keeps strangers out of your private apps and photos.",
+      hi: "एक आसान पिन अजनबियों को आपके निजी ऐप और फ़ोटो से दूर रखता है।",
+      mr: "एक सोपा पिन अनोळखी लोकांना तुमच्या खासगी अ‍ॅप्स आणि फोटोंपासून दूर ठेवतो.",
+    },
+  },
+  {
+    id: "qb3",
+    quizId: "quiz-basics",
+    question: {
+      en: "The lights have gone out. How do you turn on your phone's torch?",
+      hi: "बिजली चली गई है। फ़ोन की टॉर्च कैसे जलाएँगे?",
+      mr: "वीज गेली आहे. फोनची टॉर्च कशी लावाल?",
+    },
+    options: {
+      en: ["Shake the phone three times", "Swipe down from the top of the screen and tap the torch 🔦 icon", "Open the camera app"],
+      hi: ["फ़ोन को तीन बार हिलाएँ", "स्क्रीन के ऊपर से नीचे स्वाइप करके टॉर्च 🔦 निशान दबाएँ", "कैमरा ऐप खोलें"],
+      mr: ["फोन तीनदा हलवा", "स्क्रीनच्या वरून खाली सरकवून टॉर्च 🔦 चिन्हावर दाबा", "कॅमेरा अ‍ॅप उघडा"],
+    },
+    answer: 1,
+    explanation: {
+      en: "The quick panel at the top has a torch button that turns the light on instantly.",
+      hi: "ऊपर से खींची गई पट्टी में टॉर्च का बटन होता है जो तुरंत लाइट जलाता है।",
+      mr: "वरून ओढलेल्या पॅनेलमध्ये टॉर्चचे बटण असते जे लगेच दिवा लावते.",
+    },
+  },
+  {
+    id: "qb4",
+    quizId: "quiz-basics",
+    question: {
+      en: "You are saving your son's phone number. Which name is best?",
+      hi: "आप अपने बेटे का नंबर सहेज रहे हैं। कौन सा नाम सबसे अच्छा है?",
+      mr: "तुम्ही तुमच्या मुलाचा नंबर जतन करत आहात. कोणते नाव सर्वोत्तम?",
+    },
+    options: {
+      en: ["98765", "New Contact 2", "Son Ramesh"],
+      hi: ["98765", "नया संपर्क 2", "बेटा रमेश"],
+      mr: ["९८७६५", "नवीन संपर्क २", "मुलगा रमेश"],
+    },
+    answer: 2,
+    explanation: {
+      en: "A clear name like 'Son Ramesh' is instantly recognizable when they call.",
+      hi: "'बेटा रमेश' जैसा साफ़ नाम कॉल आने पर तुरंत पहचान में आता है।",
+      mr: "'मुलगा रमेश' असे स्पष्ट नाव कॉल आल्यावर लगेच ओळखू येते.",
+    },
+  },
+  {
+    id: "qb5",
+    quizId: "quiz-basics",
+    question: {
+      en: "During a call the other person sounds too quiet. What do you do?",
+      hi: "कॉल पर सामने वाले की आवाज़ बहुत धीमी है। आप क्या करेंगे?",
+      mr: "कॉलवर समोरच्या व्यक्तीचा आवाज खूप कमी आहे. तुम्ही काय कराल?",
+    },
+    options: {
+      en: ["Press the volume-up button on the side of the phone", "Shout into the phone", "Hang up and call again"],
+      hi: ["फ़ोन के किनारे वाला आवाज़ बढ़ाने का बटन दबाएँ", "फ़ोन में ज़ोर से बोलें", "कॉल काटकर दोबारा मिलाएँ"],
+      mr: ["फोनच्या बाजूचे आवाज वाढवण्याचे बटण दाबा", "फोनमध्ये मोठ्याने बोला", "कॉल ठेवून पुन्हा लावा"],
+    },
+    answer: 0,
+    explanation: {
+      en: "The side volume buttons make the caller's voice louder during the call.",
+      hi: "किनारे के आवाज़ बटन कॉल के दौरान सामने वाले की आवाज़ तेज़ कर देते हैं।",
+      mr: "बाजूच्या आवाज बटनांनी कॉल दरम्यान समोरच्याचा आवाज वाढतो.",
+    },
+  },
+  {
+    id: "qb6",
+    quizId: "quiz-basics",
+    question: {
+      en: "You just took a photo. How do you see it in full size?",
+      hi: "आपने अभी फ़ोटो खींची है। उसे पूरी तरह कैसे देखेंगे?",
+      mr: "तुम्ही आत्ताच फोटो काढला. तो पूर्ण कसा पाहाल?",
+    },
+    options: {
+      en: ["Restart the phone", "Tap the small square picture in the corner of the camera", "Press the camera button again"],
+      hi: ["फ़ोन को रीस्टार्ट करें", "कैमरा के कोने में बनी छोटी चौकोर फ़ोटो पर दबाएँ", "कैमरा बटन दोबारा दबाएँ"],
+      mr: ["फोन रीस्टार्ट करा", "कॅमेऱ्याच्या कोपऱ्यातील लहान चौकोन फोटोवर दाबा", "कॅमेरा बटण पुन्हा दाबा"],
+    },
+    answer: 1,
+    explanation: {
+      en: "The small thumbnail in the corner opens the photo you just took.",
+      hi: "कोने की छोटी फ़ोटो दबाने से आपकी खींची हुई तस्वीर पूरी खुल जाती है।",
+      mr: "कोपऱ्यातील लहान फोटोवर दाबल्यास काढलेला फोटो पूर्ण उघडतो.",
+    },
+  },
+  /* ── quiz-scams (new, 6) ── */
+  {
+    id: "qs1",
+    quizId: "quiz-scams",
+    question: {
+      en: "A caller says your bank account will be blocked unless you share the OTP that just arrived. What do you do?",
+      hi: "कॉलर कहता है कि अभी आया ओटीपी न बताने पर आपका बैंक खाता बंद हो जाएगा। आप क्या करेंगे?",
+      mr: "कॉलर म्हणतो की आत्ता आलेला ओटीपी सांगितला नाही तर तुमचे बँक खाते बंद होईल. तुम्ही काय कराल?",
+    },
+    options: {
+      en: ["Read out the OTP quickly", "Hang up and check with your branch using the number on your passbook", "Ask them to call back tomorrow and share it then"],
+      hi: ["ओटीपी जल्दी से बता दें", "कॉल काटकर पासबुक पर लिखे नंबर से अपनी शाखा में जाँच करें", "कल कॉल करने को कहकर तब बता दें"],
+      mr: ["ओटीपी पटकन सांगा", "फोन ठेवून पासबुकवरील नंबरवरून तुमच्या शाखेत खात्री करा", "उद्या फोन करायला सांगून मग सांगा"],
+    },
+    answer: 1,
+    explanation: {
+      en: "Real banks never ask for an OTP over the phone. Check yourself using the number printed on your passbook.",
+      hi: "असली बैंक फ़ोन पर कभी ओटीपी नहीं माँगता। पासबुक पर छपे नंबर से खुद जाँच करें।",
+      mr: "खरी बँक फोनवर कधीही ओटीपी मागत नाही. पासबुकवरील नंबरवरून स्वतः खात्री करा.",
+    },
+  },
+  {
+    id: "qs2",
+    quizId: "quiz-scams",
+    question: {
+      en: "A person in a police uniform appears on a video call and says you are under 'digital arrest'. What do you do?",
+      hi: "वीडियो कॉल पर पुलिस वर्दी में एक व्यक्ति कहता है कि आप 'डिजिटल अरेस्ट' में हैं। आप क्या करेंगे?",
+      mr: "व्हिडिओ कॉलवर पोलीस गणवेशातील व्यक्ती म्हणते की तुम्ही 'डिजिटल अरेस्ट' आहात. तुम्ही काय कराल?",
+    },
+    options: {
+      en: ["Hang up at once and tell your family — real police never do this", "Transfer money to prove you are innocent", "Keep the camera on and stay silent"],
+      hi: ["तुरंत कॉल काटकर परिवार को बताएँ — असली पुलिस ऐसा कभी नहीं करती", "निर्दोष साबित करने के लिए पैसे भेजें", "कैमरा चालू रखकर चुपचाप बैठे रहें"],
+      mr: ["लगेच फोन ठेवा आणि कुटुंबीयांना सांगा — खरे पोलीस हे कधीही करत नाहीत", "निर्दोष सिद्ध करण्यासाठी पैसे पाठवा", "कॅमेरा चालू ठेवून गप्प बसा"],
+    },
+    answer: 0,
+    explanation: {
+      en: "There is no 'digital arrest' in law. Police never arrest or ask for money on a video call.",
+      hi: "कानून में 'डिजिटल अरेस्ट' जैसा कुछ नहीं है। पुलिस वीडियो कॉल पर न गिरफ़्तार करती है, न पैसे माँगती है।",
+      mr: "कायद्यात 'डिजिटल अरेस्ट' असा प्रकार नाही. पोलीस व्हिडिओ कॉलवर अटक करत नाहीत किंवा पैसे मागत नाहीत.",
+    },
+  },
+  {
+    id: "qs3",
+    quizId: "quiz-scams",
+    question: {
+      en: "A WhatsApp message says you won ₹25 lakh in a lucky draw, but you must pay ₹12,000 'tax' first. What do you do?",
+      hi: "व्हाट्सएप संदेश कहता है कि आपने ₹25 लाख की लॉटरी जीती है, पर पहले ₹12,000 का 'टैक्स' देना होगा। आप क्या करेंगे?",
+      mr: "व्हॉट्सअ‍ॅप मेसेज म्हणतो की तुम्ही ₹२५ लाखांची लॉटरी जिंकलात, पण आधी ₹१२,००० 'टॅक्स' द्यावा लागेल. तुम्ही काय कराल?",
+    },
+    options: {
+      en: ["Pay the ₹12,000 quickly", "Ask them for a bigger prize", "Delete and block — real prizes never ask for money first"],
+      hi: ["₹12,000 जल्दी से भेज दें", "उनसे और बड़ा इनाम माँगें", "मिटाकर ब्लॉक करें — असली इनाम कभी पहले पैसे नहीं माँगता"],
+      mr: ["₹१२,००० पटकन द्या", "त्यांच्याकडे मोठे बक्षीस मागा", "डिलीट करून ब्लॉक करा — खरे बक्षीस कधीही आधी पैसे मागत नाही"],
+    },
+    answer: 2,
+    explanation: {
+      en: "You cannot win a lottery you never entered. Any prize that asks for fees is a scam.",
+      hi: "जिस लॉटरी में भाग नहीं लिया, वह इनाम नहीं मिल सकता। फ़ीस माँगने वाला हर इनाम ठगी है।",
+      mr: "ज्या लॉटरीत सहभागी झाला नाहीत, ते बक्षीस मिळू शकत नाही. फी मागणारे प्रत्येक बक्षीस फसवणूक आहे.",
+    },
+  },
+  {
+    id: "qs4",
+    quizId: "quiz-scams",
+    question: {
+      en: "A caller says your electricity will be cut tonight unless you pay right now. What do you do?",
+      hi: "कॉलर कहता है कि अभी पैसे न देने पर आज रात बिजली काट दी जाएगी। आप क्या करेंगे?",
+      mr: "कॉलर म्हणतो की आत्ता पैसे दिले नाहीत तर आज रात्री वीज कापली जाईल. तुम्ही काय कराल?",
+    },
+    options: {
+      en: ["Pay immediately through the link they send", "Check your dues on the official electricity app or an old bill — never pay a stranger on a call", "Give your card details over the phone"],
+      hi: ["उनके भेजे लिंक से तुरंत भुगतान करें", "बिजली विभाग की आधिकारिक ऐप या पुराने बिल पर बकाया जाँचें — कॉल पर किसी अजनबी को भुगतान न करें", "फ़ोन पर अपना कार्ड विवरण बता दें"],
+      mr: ["त्यांनी पाठवलेल्या लिंकवरून लगेच पेमेंट करा", "वीज मंडळाच्या अधिकृत अ‍ॅपवर किंवा जुन्या बिलावर थकबाकी तपासा — कॉलवर अनोळखी व्यक्तीला पेमेंट करू नका", "फोनवर तुमच्या कार्डचे तपशील सांगा"],
+    },
+    answer: 1,
+    explanation: {
+      en: "Electricity boards send written notices, not night-time threats from mobile numbers. Verify on the official app first.",
+      hi: "बिजली विभाग लिखित नोटिस देता है, मोबाइल नंबर से रात की धमकी नहीं। पहले आधिकारिक ऐप पर जाँचें।",
+      mr: "वीज मंडळ लेखी नोटीस देते, मोबाईल नंबरवरून रात्रीची धमकी नाही. आधी अधिकृत अ‍ॅपवर तपासा.",
+    },
+  },
+  {
+    id: "qs5",
+    quizId: "quiz-scams",
+    question: {
+      en: "You need your gas cylinder helpline number. Where is the safe place to get it?",
+      hi: "आपको गैस सिलेंडर हेल्पलाइन नंबर चाहिए। सुरक्षित जगह कौन सी है?",
+      mr: "तुम्हाला गॅस सिलिंडर हेल्पलाइन नंबर हवा आहे. सुरक्षित ठिकाण कोणते?",
+    },
+    options: {
+      en: ["The number printed on your gas passbook or receipt", "The first number that appears on Google search", "A number forwarded in a WhatsApp message"],
+      hi: ["गैस पासबुक या रसीद पर छपा नंबर", "गूगल सर्च में सबसे ऊपर दिखने वाला नंबर", "व्हाट्सएप संदेश में भेजा गया नंबर"],
+      mr: ["गॅस पासबुक किंवा पावतीवर छापलेला नंबर", "गुगल शोधात सर्वात वर दिसणारा नंबर", "व्हॉट्सअ‍ॅप मेसेजमध्ये पाठवलेला नंबर"],
+    },
+    answer: 0,
+    explanation: {
+      en: "Numbers printed on your own passbook or receipt are genuine. Search results often carry fake ones.",
+      hi: "अपनी पासबुक या रसीद पर छपे नंबर असली होते हैं। सर्च में अक्सर नकली नंबर मिलते हैं।",
+      mr: "तुमच्या पासबुक किंवा पावतीवरील नंबर खरे असतात. शोध निकालांत बहुधा बनावट नंबर असतात.",
+    },
+  },
+  {
+    id: "qs6",
+    quizId: "quiz-scams",
+    question: {
+      en: "A caller asks you to install AnyDesk so they can 'fix' your bank problem. What do you do?",
+      hi: "कॉलर कहता है कि बैंक की समस्या ठीक करने के लिए एनीडेस्क ऐप डालें। आप क्या करेंगे?",
+      mr: "कॉलर म्हणतो की बँकेची समस्या सोडवण्यासाठी एनीडेस्क अ‍ॅप इन्स्टॉल करा. तुम्ही काय कराल?",
+    },
+    options: {
+      en: ["Install it and open your bank app", "Refuse and hang up — no bank ever needs to see your screen", "Share your PIN so they can work faster"],
+      hi: ["ऐप डालकर अपना बैंक ऐप खोलें", "मना करके कॉल काट दें — किसी बैंक को आपकी स्क्रीन देखने की ज़रूरत नहीं होती", "जल्दी काम हो जाए इसलिए पिन बता दें"],
+      mr: ["अ‍ॅप इन्स्टॉल करून तुमचे बँक अ‍ॅप उघडा", "नकार द्या आणि फोन ठेवा — कोणत्याही बँकेला तुमची स्क्रीन पाहण्याची गरज नसते", "लवकर काम व्हावे म्हणून पिन सांगा"],
+    },
+    answer: 1,
+    explanation: {
+      en: "Screen-sharing apps let strangers watch your PINs and passwords. Banks never ask you to install them.",
+      hi: "स्क्रीन शेयरिंग ऐप से अजनबी आपके पिन और पासवर्ड देख सकते हैं। बैंक कभी इसे डालने को नहीं कहता।",
+      mr: "स्क्रीन-शेअरिंग अ‍ॅपने अनोळखी व्यक्तीला तुमचे पिन आणि पासवर्ड दिसतात. बँका हे अ‍ॅप कधीही इन्स्टॉल करायला सांगत नाहीत.",
+    },
+  },
+  /* ── quiz-services (new, 5) ── */
+  {
+    id: "qv1",
+    quizId: "quiz-services",
+    question: {
+      en: "Where can you safely keep your Aadhaar and PAN cards on your phone?",
+      hi: "आधार और पैन कार्ड फ़ोन पर सुरक्षित कहाँ रख सकते हैं?",
+      mr: "आधार आणि पॅन कार्ड फोनवर सुरक्षित कुठे ठेवता येतात?",
+    },
+    options: {
+      en: ["In the official DigiLocker app", "In a WhatsApp group", "In an SMS to yourself"],
+      hi: ["आधिकारिक डिजीलॉकर ऐप में", "किसी व्हाट्सएप ग्रुप में", "खुद को भेजे गए एसएमएस में"],
+      mr: ["अधिकृत डिजिलॉकर अ‍ॅपमध्ये", "एका व्हॉट्सअ‍ॅप ग्रुपमध्ये", "स्वतःला पाठवलेल्या एसएमएसमध्ये"],
+    },
+    answer: 0,
+    explanation: {
+      en: "DigiLocker is the Government of India's official app; documents there are legally valid.",
+      hi: "डिजीलॉकर भारत सरकार का आधिकारिक ऐप है; वहाँ रखे दस्तावेज़ कानूनी रूप से मान्य हैं।",
+      mr: "डिजिलॉकर हे भारत सरकारचे अधिकृत अ‍ॅप आहे; तिथे ठेवलेले दस्तऐवज कायदेशीरदृष्ट्या वैध आहेत.",
+    },
+  },
+  {
+    id: "qv2",
+    quizId: "quiz-services",
+    question: {
+      en: "You want spoken directions to the hospital. Which app helps?",
+      hi: "अस्पताल तक बोलकर रास्ता बताने वाला कौन सा ऐप मदद करता है?",
+      mr: "रुग्णालयापर्यंत बोलून मार्ग दाखवणारे कोणते अ‍ॅप मदत करते?",
+    },
+    options: {
+      en: ["The Play Store", "Google Maps", "The calculator"],
+      hi: ["प्ले स्टोर", "गूगल मैप्स", "कैलकुलेटर"],
+      mr: ["प्ले स्टोअर", "गुगल मॅप्स", "कॅल्क्युलेटर"],
+    },
+    answer: 1,
+    explanation: {
+      en: "Google Maps speaks each turn aloud so you can follow the way without staring at the screen.",
+      hi: "गूगल मैप्स हर मोड़ बोलकर बताता है, जिससे स्क्रीन देखे बिना रास्ता मिलता है।",
+      mr: "गुगल मॅप्स प्रत्येक वळण बोलून सांगते, त्यामुळे स्क्रीनकडे न पाहता रस्ता समजतो.",
+    },
+  },
+  {
+    id: "qv3",
+    quizId: "quiz-services",
+    question: {
+      en: "You are paying your electricity bill from home. Where do you find your consumer number?",
+      hi: "आप घर से बिजली बिल भर रहे हैं। उपभोक्ता नंबर कहाँ मिलेगा?",
+      mr: "तुम्ही घरून वीजबिल भरत आहात. ग्राहक क्रमांक कुठे मिळेल?",
+    },
+    options: {
+      en: ["Printed on your old paper electricity bill", "A caller will tell you over the phone", "It is your own phone number"],
+      hi: ["पुराने कागज़ के बिजली बिल पर छपा होता है", "कोई कॉलर फ़ोन पर बता देगा", "यह आपका अपना फ़ोन नंबर होता है"],
+      mr: ["जुन्या कागदी वीजबिलावर छापलेला असतो", "कोणी कॉलर फोनवर सांगेल", "तो तुमचा स्वतःचा फोन नंबर असतो"],
+    },
+    answer: 0,
+    explanation: {
+      en: "Your consumer number is printed on every paper bill. Never take it from a caller.",
+      hi: "उपभोक्ता नंबर हर कागज़ के बिल पर छपा होता है। किसी कॉलर से कभी न लें।",
+      mr: "ग्राहक क्रमांक प्रत्येक कागदी बिलावर छापलेला असतो. कॉलरकडून कधीही घेऊ नका.",
+    },
+  },
+  {
+    id: "qv4",
+    quizId: "quiz-services",
+    question: {
+      en: "You booked a doctor appointment online. What should you keep for the clinic visit?",
+      hi: "आपने ऑनलाइन डॉक्टर अपॉइंटमेंट ले लिया है। क्लिनिक जाते समय क्या रखना चाहिए?",
+      mr: "तुम्ही ऑनलाइन डॉक्टर भेट बुक केली आहे. दवाखान्यात जाताना काय ठेवावे?",
+    },
+    options: {
+      en: ["Nothing at all", "A screenshot or the confirmation message", "The clinic's landline number"],
+      hi: ["कुछ भी नहीं", "स्क्रीनशॉट या पुष्टि संदेश", "क्लिनिक का लैंडलाइन नंबर"],
+      mr: ["काहीच नाही", "स्क्रीनशॉट किंवा पुष्टी मेसेज", "दवाखान्याचा लँडलाइन नंबर"],
+    },
+    answer: 1,
+    explanation: {
+      en: "Showing the confirmation at the desk saves time and avoids confusion.",
+      hi: "काउंटर पर पुष्टि दिखाने से समय बचता है और भ्रम नहीं होता।",
+      mr: "काउंटरवर पुष्टी दाखवल्यास वेळ वाचतो आणि गोंधळ होत नाही.",
+    },
+  },
+  {
+    id: "qv5",
+    quizId: "quiz-services",
+    question: {
+      en: "The Jeevan Pramaan app helps pensioners submit which document from home?",
+      hi: "'जीवन प्रमाण' ऐप पेंशनधारियों को घर से कौन सा दस्तावेज़ जमा करने में मदद करता है?",
+      mr: "'जीवन प्रमाण' अ‍ॅप पेन्शनधारकांना घरून कोणता दस्तऐवज सादर करण्यास मदत करते?",
+    },
+    options: {
+      en: ["The annual life certificate", "The electricity bill", "A passport application"],
+      hi: ["वार्षिक जीवन प्रमाण पत्र", "बिजली का बिल", "पासपोर्ट का आवेदन"],
+      mr: ["वार्षिक जीवन प्रमाणपत्र", "वीजबिल", "पासपोर्ट अर्ज"],
+    },
+    answer: 0,
+    explanation: {
+      en: "With a simple face check on the phone, the life certificate is submitted without a bank visit.",
+      hi: "फ़ोन पर चेहरा पहचान से जीवन प्रमाण पत्र बिना बैंक जाए जमा हो जाता है।",
+      mr: "फोनवर चेहऱ्याच्या पडताळणीने जीवन प्रमाणपत्र बँकेत न जाता जमा होते.",
     },
   },
 ];

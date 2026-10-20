@@ -12,10 +12,11 @@ export type Lesson = {
   estimatedTime: number; // minutes
   quizId?: string;
   /**
-   * Verified YouTube video IDs, one per language where available.
-   * Mirrors the `Localized` shape but holds YouTube ids, not display strings.
+   * Verified YouTube video IDs per language. A single string is the primary
+   * video; an array adds a "More videos" row. All languages currently share
+   * the same (Hindi) videos.
    */
-  video?: { en?: string; hi?: string; mr?: string };
+  video?: { en?: string | string[]; hi?: string | string[]; mr?: string | string[] };
   videoTitle?: Localized;
 };
 
@@ -125,7 +126,7 @@ export const LESSONS: Lesson[] = [
     },
     difficulty: "beginner",
     estimatedTime: 3,
-    video: { en: "u2ZMr0Cf4ZM" },
+    video: { en: "uQ1MA17A0ZA", hi: "uQ1MA17A0ZA", mr: "uQ1MA17A0ZA" },
     videoTitle: {
       en: "Smartphone basics explained slowly",
       hi: "स्मार्टफ़ोन की मूल बातें - आसान वीडियो",
@@ -170,6 +171,7 @@ export const LESSONS: Lesson[] = [
     },
     difficulty: "beginner",
     estimatedTime: 3,
+    video: { en: "uQ1MA17A0ZA", hi: "uQ1MA17A0ZA", mr: "uQ1MA17A0ZA" },
     quizId: "quiz-basics",
   },
   {
@@ -210,6 +212,7 @@ export const LESSONS: Lesson[] = [
     },
     difficulty: "beginner",
     estimatedTime: 3,
+    video: { en: "RK9IYSndyLw", hi: "RK9IYSndyLw", mr: "RK9IYSndyLw" },
   },
   {
     id: "basics-large-text",
@@ -249,6 +252,7 @@ export const LESSONS: Lesson[] = [
     },
     difficulty: "beginner",
     estimatedTime: 4,
+    video: { en: "a6mIcB4Ry8c", hi: "a6mIcB4Ry8c", mr: "a6mIcB4Ry8c" },
   },
   {
     id: "basics-screen-lock",
@@ -288,6 +292,7 @@ export const LESSONS: Lesson[] = [
     },
     difficulty: "beginner",
     estimatedTime: 4,
+    video: { en: "GOheHJedWHI", hi: "GOheHJedWHI", mr: "GOheHJedWHI" },
     quizId: "quiz-basics",
   },
   {
@@ -328,7 +333,7 @@ export const LESSONS: Lesson[] = [
     },
     difficulty: "beginner",
     estimatedTime: 4,
-    video: { en: "5eYYtUB9wUY" },
+    video: { en: "dL08ykVuuhQ", hi: "dL08ykVuuhQ", mr: "dL08ykVuuhQ" },
     videoTitle: {
       en: "Taking and sharing photos",
       hi: "फ़ोटो लेना और देखना - आसान वीडियो",
@@ -373,6 +378,7 @@ export const LESSONS: Lesson[] = [
     },
     difficulty: "beginner",
     estimatedTime: 3,
+    video: { en: "hzgZGUOuvvg", hi: "hzgZGUOuvvg", mr: "hzgZGUOuvvg" },
   },
   {
     id: "basics-contacts",
@@ -412,6 +418,7 @@ export const LESSONS: Lesson[] = [
     },
     difficulty: "beginner",
     estimatedTime: 4,
+    video: { en: "A2KwGm6Yr4E", hi: "A2KwGm6Yr4E", mr: "A2KwGm6Yr4E" },
   },
 
   /* ---------------- WHATSAPP ---------------- */
@@ -453,7 +460,7 @@ export const LESSONS: Lesson[] = [
     },
     difficulty: "beginner",
     estimatedTime: 4,
-    video: { en: "gwSHqPFP5Wg" },
+    video: { en: "bitdnzMEcEw", hi: "bitdnzMEcEw", mr: "bitdnzMEcEw" },
     videoTitle: {
       en: "WhatsApp for beginners",
       hi: "व्हाट्सएप चलाना सीखें - आसान वीडियो",
@@ -498,6 +505,7 @@ export const LESSONS: Lesson[] = [
     },
     difficulty: "beginner",
     estimatedTime: 3,
+    video: { en: "PZzIczw2bdc", hi: "PZzIczw2bdc", mr: "PZzIczw2bdc" },
   },
   {
     id: "wa-video-call",
@@ -537,7 +545,7 @@ export const LESSONS: Lesson[] = [
     },
     difficulty: "beginner",
     estimatedTime: 4,
-    video: { en: "0v8YDvRHtLU" },
+    video: { en: "SoJ5sp1n5OQ", hi: "SoJ5sp1n5OQ", mr: "SoJ5sp1n5OQ" },
     videoTitle: {
       en: "Making a video call",
       hi: "वीडियो कॉल करना - आसान वीडियो",
@@ -582,6 +590,7 @@ export const LESSONS: Lesson[] = [
     },
     difficulty: "comfortable",
     estimatedTime: 3,
+    video: { en: "0fe9nzUHEHE", hi: "0fe9nzUHEHE", mr: "0fe9nzUHEHE" },
   },
   {
     id: "wa-group-privacy",
@@ -622,6 +631,7 @@ export const LESSONS: Lesson[] = [
     difficulty: "comfortable",
     estimatedTime: 4,
     quizId: "quiz-whatsapp",
+    video: { en: "G8OtkY3dPfY", hi: "G8OtkY3dPfY", mr: "G8OtkY3dPfY" },
   },
 
   /* ---------------- PAYMENTS ---------------- */
@@ -663,12 +673,6 @@ export const LESSONS: Lesson[] = [
     },
     difficulty: "beginner",
     estimatedTime: 5,
-    video: { en: "TnZbdHtTgAA" },
-    videoTitle: {
-      en: "How UPI payments work",
-      hi: "यूपीआई कैसे काम करता है - आसान वीडियो",
-      mr: "यूपीआय कसे चालते - सोपा व्हिडिओ",
-    },
     quizId: "quiz-payments",
   },
   {
@@ -710,6 +714,7 @@ export const LESSONS: Lesson[] = [
     difficulty: "beginner",
     estimatedTime: 4,
     quizId: "quiz-payments",
+    video: { en: "i7DcdpKxPsA", hi: "i7DcdpKxPsA", mr: "i7DcdpKxPsA" },
   },
   {
     id: "pay-qr-code",
@@ -749,7 +754,11 @@ export const LESSONS: Lesson[] = [
     },
     difficulty: "beginner",
     estimatedTime: 5,
-    video: { en: "kFVGvHDh6Kk" },
+    video: {
+      en: ["44cq5JQUBtA", "0mVT6f9e-M0"],
+      hi: ["44cq5JQUBtA", "0mVT6f9e-M0"],
+      mr: ["44cq5JQUBtA", "0mVT6f9e-M0"],
+    },
     videoTitle: {
       en: "Scanning a QR code to pay",
       hi: "क्यूआर स्कैन कर भुगतान - आसान वीडियो",
@@ -794,6 +803,11 @@ export const LESSONS: Lesson[] = [
     },
     difficulty: "beginner",
     estimatedTime: 3,
+    video: {
+      en: ["HUztgY119Mg", "VOpd9afWZIA", "kjNRJRIUhS8"],
+      hi: ["HUztgY119Mg", "VOpd9afWZIA", "kjNRJRIUhS8"],
+      mr: ["HUztgY119Mg", "VOpd9afWZIA", "kjNRJRIUhS8"],
+    },
   },
   {
     id: "pay-failed-refund",
@@ -834,6 +848,7 @@ export const LESSONS: Lesson[] = [
     difficulty: "comfortable",
     estimatedTime: 4,
     quizId: "quiz-payments",
+    video: { en: "1OpzcIyNOI0", hi: "1OpzcIyNOI0", mr: "1OpzcIyNOI0" },
   },
 
   /* ---------------- INTERNET & WI-FI ---------------- */
@@ -875,6 +890,7 @@ export const LESSONS: Lesson[] = [
     },
     difficulty: "beginner",
     estimatedTime: 4,
+    video: { en: "AgZWcWJe3yA", hi: "AgZWcWJe3yA", mr: "AgZWcWJe3yA" },
   },
   {
     id: "net-otp",
@@ -914,7 +930,7 @@ export const LESSONS: Lesson[] = [
     },
     difficulty: "beginner",
     estimatedTime: 4,
-    video: { en: "0lYRTfF3nJ4" },
+    video: { en: "Mnj-LhF2nug", hi: "Mnj-LhF2nug", mr: "Mnj-LhF2nug" },
     videoTitle: {
       en: "Why you must never share an OTP",
       hi: "ओटीपी क्यों न बताएँ - ज़रूरी वीडियो",
@@ -960,6 +976,7 @@ export const LESSONS: Lesson[] = [
     },
     difficulty: "beginner",
     estimatedTime: 4,
+    video: { en: "dqnxgbC_xo8", hi: "dqnxgbC_xo8", mr: "dqnxgbC_xo8" },
   },
   {
     id: "net-safe-browsing",
@@ -999,7 +1016,7 @@ export const LESSONS: Lesson[] = [
     },
     difficulty: "comfortable",
     estimatedTime: 5,
-    video: { en: "aO858HyFbKI" },
+    video: { en: "gXoSkk73Bu0", hi: "gXoSkk73Bu0", mr: "gXoSkk73Bu0" },
     videoTitle: {
       en: "Internet safety basics",
       hi: "इंटरनेट सुरक्षा - आसान वीडियो",
@@ -1045,6 +1062,11 @@ export const LESSONS: Lesson[] = [
     },
     difficulty: "comfortable",
     estimatedTime: 4,
+    video: {
+      en: ["CkeZ2TKCvPY", "QPMhnBfebQo"],
+      hi: ["CkeZ2TKCvPY", "QPMhnBfebQo"],
+      mr: ["CkeZ2TKCvPY", "QPMhnBfebQo"],
+    },
   },
 
   /* ---------------- SERVICES ---------------- */
@@ -1086,7 +1108,8 @@ export const LESSONS: Lesson[] = [
     },
     difficulty: "comfortable",
     estimatedTime: 5,
-    video: { en: "sGDHkbAmqzc" },
+    quizId: "quiz-services",
+    video: { en: "nfYLyYtmzW0", hi: "nfYLyYtmzW0", mr: "nfYLyYtmzW0" },
     videoTitle: {
       en: "Using Google Maps",
       hi: "गूगल मैप्स चलाना - आसान वीडियो",
@@ -1131,6 +1154,8 @@ export const LESSONS: Lesson[] = [
     },
     difficulty: "confident",
     estimatedTime: 5,
+    quizId: "quiz-services",
+    video: { en: "MBVeEDcBCOk", hi: "MBVeEDcBCOk", mr: "MBVeEDcBCOk" },
   },
   {
     id: "svc-doctor-appointment",
@@ -1170,6 +1195,7 @@ export const LESSONS: Lesson[] = [
     },
     difficulty: "comfortable",
     estimatedTime: 5,
+    quizId: "quiz-services",
   },
   {
     id: "svc-utility-bills",
@@ -1209,6 +1235,7 @@ export const LESSONS: Lesson[] = [
     },
     difficulty: "comfortable",
     estimatedTime: 5,
+    quizId: "quiz-services",
   },
   {
     id: "svc-senior-schemes",
@@ -1248,6 +1275,7 @@ export const LESSONS: Lesson[] = [
     },
     difficulty: "confident",
     estimatedTime: 6,
+    quizId: "quiz-services",
   },
 ];
 
@@ -1259,7 +1287,14 @@ export function getLesson(id: string) {
   return LESSONS.find((l) => l.id === id);
 }
 
-/** YouTube id for a lesson in the given language (en fallback), if verified. */
+/** All verified YouTube ids for a lesson in the given language (en fallback). */
+export function lessonVideoIds(lesson: Lesson | undefined, lang: Lang): string[] {
+  const raw = lesson?.video?.[lang] ?? lesson?.video?.en;
+  if (!raw) return [];
+  return Array.isArray(raw) ? raw : [raw];
+}
+
+/** Primary YouTube id for a lesson in the given language (en fallback), if verified. */
 export function lessonVideoId(lesson: Lesson | undefined, lang: Lang): string | undefined {
-  return lesson?.video?.[lang] ?? lesson?.video?.en;
+  return lessonVideoIds(lesson, lang)[0];
 }

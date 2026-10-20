@@ -31,6 +31,28 @@ const LEVELS: { id: SkillLevel; labelKey: string; emoji: string }[] = [
   { id: "confident", labelKey: "confident", emoji: "🚀" },
 ];
 
+const LEVEL_RANK: Record<SkillLevel, number> = { beginner: 0, comfortable: 1, confident: 2 };
+
+/** Unfinished item whose difficulty is closest to the chosen level (easier wins a tie). */
+function bestForLevel<T extends { id: string; difficulty: SkillLevel }>(
+  ordered: T[],
+  completed: string[],
+  level: SkillLevel,
+): T | undefined {
+  const target = LEVEL_RANK[level];
+  let best: T | undefined;
+  let bestDist = Infinity;
+  for (const item of ordered) {
+    if (completed.includes(item.id)) continue;
+    const dist = Math.abs(LEVEL_RANK[item.difficulty] - target);
+    if (dist < bestDist) {
+      best = item;
+      bestDist = dist;
+    }
+  }
+  return best;
+}
+
 function HomePage() {
   const { state, t, update } = useApp();
   const hour = new Date().getHours();
@@ -41,8 +63,13 @@ function HomePage() {
 
   // "Continue learning" only appears for a genuinely unfinished lesson
   const currentLesson = lessons.current;
-  const recommendedLesson = lessons.next ?? lessons.current;
-  const recommendedStory = stories.current;
+  // "Recommended for you" follows the level chosen in the switcher below.
+  const recommendedLesson = bestForLevel(lessons.ordered, state.completedLessons, state.skillLevel);
+  const recommendedStory = bestForLevel(
+    stories.ordered,
+    state.completedStories ?? [],
+    state.skillLevel,
+  );
 
   return (
     <div className="space-y-8">
@@ -58,16 +85,55 @@ function HomePage() {
       <section>
         <SectionHeader title={t("yourProgress")} emoji="🌱" />
         <div className="grid gap-4 sm:grid-cols-2">
-          <ProgressCard label={t("lessonsProgress")} value={lessons.done} total={lessons.total} />
-          <ProgressCard
-            label={t("storiesProgress")}
-            value={stories.done}
-            total={stories.total}
-            tone="success"
-          />
+          {/* Each bar is tappable and goes straight to the next topic. */}
+          {lessons.current ? (
+            <ProgressCard
+              label={t("lessonsProgress")}
+              value={lessons.done}
+              total={lessons.total}
+              link={{ to: "/learn/$lessonId", params: { lessonId: lessons.current.id } }}
+              nextTitle={`${t("nextUp")}: ${pick(lessons.current.title, state.lang)}`}
+              continueLabel={t("progressContinue")}
+              ariaLabel={`${t("lessonsProgress")} ${lessons.percent}% — ${pick(lessons.current.title, state.lang)}`}
+            />
+          ) : (
+            <ProgressCard
+              label={t("lessonsProgress")}
+              value={lessons.done}
+              total={lessons.total}
+              link={{ to: "/learn" }}
+              nextTitle={t("allLessonsDone")}
+              continueLabel={t("progressContinue")}
+              ariaLabel={`${t("lessonsProgress")} ${lessons.percent}% — ${t("allLessonsDone")}`}
+            />
+          )}
+          {stories.current ? (
+            <ProgressCard
+              label={t("storiesProgress")}
+              value={stories.done}
+              total={stories.total}
+              tone="success"
+              link={{ to: "/safe/$storyId", params: { storyId: stories.current.id } }}
+              nextTitle={`${t("nextUp")}: ${pick(stories.current.title, state.lang)}`}
+              continueLabel={t("progressContinue")}
+              ariaLabel={`${t("storiesProgress")} ${stories.percent}% — ${pick(stories.current.title, state.lang)}`}
+            />
+          ) : (
+            <ProgressCard
+              label={t("storiesProgress")}
+              value={stories.done}
+              total={stories.total}
+              tone="success"
+              link={{ to: "/safe" }}
+              nextTitle={t("allStoriesRead")}
+              continueLabel={t("progressContinue")}
+              ariaLabel={`${t("storiesProgress")} ${stories.percent}% — ${t("allStoriesRead")}`}
+            />
+          )}
         </div>
         <p className="mt-3 text-lg text-muted-foreground">
-          {lessons.percent}% {t("percentDone")} — {t("keepGoing")}
+          {lessons.percent}% {t("lessonsProgress")} · {stories.percent}% {t("storiesProgress")} —{" "}
+          {t("keepGoing")}
         </p>
       </section>
 
@@ -150,6 +216,7 @@ function HomePage() {
                     {pick(recommendedLesson.description, state.lang)}
                   </p>
                   <div className="mt-3 flex flex-wrap gap-2">
+                    <Chip tone="primary">{t(recommendedLesson.difficulty)}</Chip>
                     <Chip>⏱ {recommendedLesson.estimatedTime} min</Chip>
                     {lessonVideoId(recommendedLesson, state.lang) ? (
                       <Chip tone="accent">▶️ {t("videoIncluded")}</Chip>
@@ -183,6 +250,7 @@ function HomePage() {
                     {pick(recommendedStory.summary, state.lang)}
                   </p>
                   <div className="mt-3">
+                    <Chip tone="primary">{t(recommendedStory.difficulty)}</Chip>
                     <Chip tone="danger">{t("scam")}</Chip>
                   </div>
                 </div>

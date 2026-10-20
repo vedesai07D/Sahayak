@@ -1,4 +1,6 @@
 import { Link } from "@tanstack/react-router";
+import { ChevronRight } from "lucide-react";
+import { forwardRef } from "react";
 import type { ReactNode } from "react";
 import { cn } from "@/lib/utils";
 
@@ -148,25 +150,45 @@ export function Chip({
   );
 }
 
+export type ProgressLink =
+  | { to: "/learn" }
+  | { to: "/learn/$lessonId"; params: { lessonId: string } }
+  | { to: "/safe" }
+  | { to: "/safe/$storyId"; params: { storyId: string } };
+
 export function ProgressCard({
   label,
   value,
   total,
   tone = "primary",
+  link,
+  nextTitle,
+  continueLabel,
+  ariaLabel,
 }: {
   label: string;
   value: number;
   total: number;
   tone?: "primary" | "success" | "accent";
+  /** When provided, the whole card becomes a tappable link (real <a>) that
+   *  takes the user to the next topic. */
+  link?: ProgressLink;
+  /** Shown under the bar, e.g. "Next: <title>" or "All lessons done 🎉". */
+  nextTitle?: string;
+  /** Small continue affordance with a chevron; only shown on linked cards. */
+  continueLabel?: string;
+  /** Full aria-label for the linked card. */
+  ariaLabel?: string;
 }) {
-  const pct = total > 0 ? Math.round((value / total) * 100) : 0;
+  const pct = total > 0 ? Math.min(100, Math.round((value / total) * 100)) : 0;
   const bar = {
     primary: "bg-primary",
     success: "bg-success",
     accent: "bg-accent",
   }[tone];
-  return (
-    <div data-surface className="card-surface p-4">
+
+  const content = (
+    <>
       <div className="flex items-baseline justify-between gap-2">
         <span className="text-lg font-semibold">{label}</span>
         <span className="text-lg font-bold tabular-nums">{pct}%</span>
@@ -177,16 +199,78 @@ export function ProgressCard({
         aria-valuenow={pct}
         aria-valuemin={0}
         aria-valuemax={100}
-        aria-label={label}
+        aria-label={ariaLabel ?? label}
       >
         <div className={cn("h-full rounded-full transition-all", bar)} style={{ width: `${pct}%` }} />
       </div>
       <p className="mt-2 text-sm text-muted-foreground">
         {value} / {total}
       </p>
+      {nextTitle ? (
+        <p className="mt-1 text-base font-semibold text-primary">{nextTitle}</p>
+      ) : null}
+      {continueLabel ? (
+        <span className="mt-2 inline-flex items-center gap-1 text-base font-bold text-primary">
+          {continueLabel} <ChevronRight className="size-5 shrink-0" aria-hidden="true" />
+        </span>
+      ) : null}
+    </>
+  );
+
+  if (link) {
+    const cls =
+      "card-surface block p-4 transition-shadow hover:shadow-lift focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-primary/30";
+    switch (link.to) {
+      case "/learn/$lessonId":
+        return (
+          <Link to={link.to} params={link.params} aria-label={ariaLabel} className={cls}>
+            {content}
+          </Link>
+        );
+      case "/safe/$storyId":
+        return (
+          <Link to={link.to} params={link.params} aria-label={ariaLabel} className={cls}>
+            {content}
+          </Link>
+        );
+      default:
+        return (
+          <Link to={link.to} aria-label={ariaLabel} className={cls}>
+            {content}
+          </Link>
+        );
+    }
+  }
+
+  return (
+    <div data-surface className="card-surface p-4">
+      {content}
     </div>
   );
 }
+
+/* ---------------- Form inputs ---------------- */
+
+const elderInputCls =
+  "box-border block w-full min-w-0 max-w-full min-h-14 rounded-xl border-2 border-border bg-background px-4 text-lg placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-primary/30";
+
+/** Elder-friendly input: full-width, never overflows its grid/flex parent. */
+export const ElderInput = forwardRef<
+  HTMLInputElement,
+  React.InputHTMLAttributes<HTMLInputElement>
+>(function ElderInput({ className, ...props }, ref) {
+  return <input ref={ref} {...props} className={cn(elderInputCls, className)} />;
+});
+
+/** Elder-friendly textarea with the same overflow-safe sizing as ElderInput. */
+export const ElderTextarea = forwardRef<
+  HTMLTextAreaElement,
+  React.TextareaHTMLAttributes<HTMLTextAreaElement>
+>(function ElderTextarea({ className, ...props }, ref) {
+  return (
+    <textarea ref={ref} {...props} className={cn(elderInputCls, "py-3", className)} />
+  );
+});
 
 export function EmptyState({
   emoji = "📭",

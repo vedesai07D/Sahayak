@@ -33,10 +33,15 @@ function buildTrack<T extends { id: string; difficulty: "beginner" | "comfortabl
   const ordered = [...items].sort(
     (a, b) => DIFFICULTY_RANK[a.difficulty] - DIFFICULTY_RANK[b.difficulty],
   );
-  const doneSet = new Set(completed);
+  const existing = new Set(ordered.map((i) => i.id));
+  // Ignore stale ids from localStorage that no longer exist in the content.
+  const doneSet = new Set(completed.filter((id) => existing.has(id)));
   const uncompleted = ordered.filter((i) => !doneSet.has(i.id));
+  // Recency only counts items that still exist and are still uncompleted, so
+  // `current` is stable and never points at a stale or finished item.
+  const validRecent = recentIds.filter((id) => existing.has(id) && !doneSet.has(id));
   const current =
-    uncompleted.find((i) => recentIds.includes(i.id)) ?? uncompleted[0];
+    uncompleted.find((i) => validRecent.includes(i.id)) ?? uncompleted[0];
   const currentIndex = current ? ordered.indexOf(current) : -1;
   const next = uncompleted.find((i) => ordered.indexOf(i) > currentIndex);
   const total = ordered.length;
@@ -45,7 +50,7 @@ function buildTrack<T extends { id: string; difficulty: "beginner" | "comfortabl
     ordered,
     done,
     total,
-    percent: total === 0 ? 0 : Math.round((done / total) * 100),
+    percent: total === 0 ? 0 : Math.min(100, Math.round((done / total) * 100)),
     current,
     next,
   };

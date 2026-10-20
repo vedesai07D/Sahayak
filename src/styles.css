@@ -211,6 +211,15 @@ html[data-motion="reduced"] *::after {
     word-break: normal;
   }
 
+  /* Overflow-safe form controls: never push a grid track past the viewport */
+  input,
+  textarea,
+  select {
+    max-width: 100%;
+    box-sizing: border-box;
+    font: inherit;
+  }
+
   input,
   textarea,
   select,
@@ -239,4 +248,31 @@ html[data-motion="reduced"] *::after {
   border-radius: var(--radius-xl);
   border: 1px solid var(--color-border);
   box-shadow: var(--shadow-card);
+}
+
+
+/* Like / save heart: quick "pop" when toggled */
+@keyframes heart-pop {
+  0% {
+    transform: scale(1);
+  }
+  30% {
+    transform: scale(1.6);
+  }
+  60% {
+    transform: scale(0.9);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+.heart-pop {
+  animation: heart-pop 0.45s ease-out;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .heart-pop {
+    animation: none;
+  }
 }

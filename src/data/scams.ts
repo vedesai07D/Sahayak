@@ -122,6 +122,10 @@ export type ScamStory = {
   whatToDoIfHappened: LocalizedList;
   keyLesson: Localized;
   difficulty: "beginner" | "comfortable" | "confident";
+  /** Optional linked quiz shown at the bottom of the story page. */
+  quizId?: string;
+  /** Optional YouTube video id rendered after the story text. */
+  video?: string;
 };
 
 export const SCAM_STORIES: ScamStory[] = [
@@ -205,6 +209,8 @@ export const SCAM_STORIES: ScamStory[] = [
       mr: "बँक कधीही फोनवर ओटीपी मागत नाही. ओटीपी ही तुमची वैयक्तिक गुप्त चावी आहे.",
     },
     difficulty: "beginner",
+    quizId: "quiz-scams",
+    video: "Mnj-LhF2nug",
   },
   {
     id: "story-upi-request",
@@ -286,6 +292,8 @@ export const SCAM_STORIES: ScamStory[] = [
       mr: "पिन म्हणजे पैसे देणे. पैसे स्वीकारण्यासाठी कधीही पिन लागत नाही.",
     },
     difficulty: "beginner",
+    quizId: "quiz-scams",
+    video: "i7DcdpKxPsA",
   },
   {
     id: "story-electricity-bill",
@@ -367,6 +375,7 @@ export const SCAM_STORIES: ScamStory[] = [
       mr: "वीज किंवा पाणी मंडळ कधीही वैयक्तिक मोबाईल नंबरवरून अचानक वीज कापण्याची धमकी देत नाही.",
     },
     difficulty: "beginner",
+    quizId: "quiz-scams",
   },
   {
     id: "story-digital-arrest",
@@ -448,6 +457,7 @@ export const SCAM_STORIES: ScamStory[] = [
       mr: "कायद्यात 'डिजिटल अरेस्ट' असा कोणताही प्रकार नाही. पोलीस कधीही व्हिडिओ कॉलवर पैसे मागत नाहीत.",
     },
     difficulty: "comfortable",
+    quizId: "quiz-scams",
   },
   {
     id: "story-fake-customer-care",
@@ -529,6 +539,7 @@ export const SCAM_STORIES: ScamStory[] = [
       mr: "गुगल सर्चवरील सर्व नंबर खरे नसतात. नेहमी अधिकृत पावती किंवा पासबुकवरील नंबरच वापरा.",
     },
     difficulty: "comfortable",
+    quizId: "quiz-scams",
   },
   {
     id: "story-whatsapp-impersonation",
@@ -610,6 +621,7 @@ export const SCAM_STORIES: ScamStory[] = [
       mr: "जेव्हा मेसेज येतो 'नवा नंबर आहे, पैसे हवेत, फोन करू नको' — तेव्हा आधी जुन्या नंबरवर फोन लावाच.",
     },
     difficulty: "beginner",
+    quizId: "quiz-scams",
   },
   {
     id: "story-kbc-lottery",
@@ -691,6 +703,7 @@ export const SCAM_STORIES: ScamStory[] = [
       mr: "तिकीट काढले नसेल तर लॉटरी लागूच शकत नाही. खरे बक्षीस कधीही आधी पैसे मागत नाही.",
     },
     difficulty: "beginner",
+    quizId: "quiz-scams",
   },
 ];
 

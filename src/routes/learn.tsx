@@ -109,7 +109,7 @@ function LearnIndex() {
               onChange={(e) => setQuery(e.target.value)}
               placeholder={t("findSpecificLesson")}
               aria-label={t("findSpecificLesson")}
-              className="w-full min-h-14 rounded-xl border-2 border-border bg-card px-4 text-lg focus:border-primary focus:outline-none"
+              className="box-border block w-full min-w-0 max-w-full min-h-14 rounded-xl border-2 border-border bg-card px-4 text-lg focus:border-primary focus:outline-none"
             />
             {searching ? (
               <div className="grid gap-3">

@@ -1,12 +1,14 @@
 import { createFileRoute, Link, useParams } from "@tanstack/react-router";
 import { useEffect, useState } from "react";
-import { ArrowLeft, Check, Heart, Play, Wifi } from "lucide-react";
+import { ArrowLeft, Check, Wifi } from "lucide-react";
+import { AnimatedHeart } from "@/components/AnimatedHeart";
 import { Chip, ElderButton, LargeCard, PageHeader } from "@/components/elder";
 import { ListenButton } from "@/components/ListenButton";
 import { QuizPanel } from "@/components/QuizPanel";
+import { VideoCard } from "@/components/VideoCard";
 import { useApp } from "@/lib/store";
 import { pick, pickList } from "@/lib/i18n";
-import { getLesson, lessonVideoId, lessonsByCategory } from "@/data/lessons";
+import { getLesson, lessonVideoIds, lessonsByCategory } from "@/data/lessons";
 import { QUIZZES } from "@/data/content";
 import { lessonTrack } from "@/lib/progress";
 
@@ -32,16 +34,29 @@ function LessonPage() {
   const { lessonId } = useParams({ from: "/learn/$lessonId" });
   const { state, t, completeLesson, toggleFavorite, isFavorite, trackRecent } = useApp();
   const lesson = getLesson(lessonId);
-  const [playingVideo, setPlayingVideo] = useState(false);
-  // If the embed fails to load (bad/removed id), hide the block — never crash the lesson.
-  const [videoFailed, setVideoFailed] = useState(false);
+  // Once the quiz has been started it stays mounted even if the lesson's
+  // completion toggle is switched off mid-attempt. Tracked per lesson in
+  // sessionStorage so a refresh keeps the quiz visible.
+  const [quizStarted, setQuizStarted] = useState(false);
+
+  const markQuizStarted = () => {
+    setQuizStarted(true);
+    try {
+      sessionStorage.setItem(`sahayak.quizStarted.${lessonId}`, "1");
+    } catch {
+      /* storage unavailable — in-memory state is enough for this visit */
+    }
+  };
 
   useEffect(() => {
     if (lesson) {
       trackRecent({ id: lesson.id, kind: "lesson", title: pick(lesson.title, state.lang) });
     }
-    setPlayingVideo(false);
-    setVideoFailed(false);
+    try {
+      setQuizStarted(sessionStorage.getItem(`sahayak.quizStarted.${lessonId}`) === "1");
+    } catch {
+      setQuizStarted(false);
+    }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [lessonId]);
 
@@ -67,8 +82,8 @@ function LessonPage() {
   const readAloud = [title, description, ...steps].join(". ");
   const quiz = lesson.quizId ? QUIZZES.find((q) => q.id === lesson.quizId) : undefined;
   const nextLesson = lessonTrack(state).next;
-  // Video for the current UI language (falls back to en inside lessonVideoId)
-  const videoId = lessonVideoId(lesson, state.lang);
+  // Verified videos for the current UI language (falls back to en)
+  const videoIds = lessonVideoIds(lesson, state.lang);
 
   return (
     <div className="space-y-8">
@@ -85,14 +100,14 @@ function LessonPage() {
         <Chip>⏱ {lesson.estimatedTime} min</Chip>
         <Chip tone="primary">{t(lesson.difficulty)}</Chip>
         {done ? <Chip tone="success">✓ {t("completed")}</Chip> : null}
-        {videoId ? <Chip tone="accent">▶️ {t("videoIncluded")}</Chip> : null}
+        {videoIds.length > 0 ? <Chip tone="accent">▶️ {t("videoIncluded")}</Chip> : null}
       </div>
 
       {/* Voice Listen Button — prefers a pre-generated recording when one exists */}
       <ListenButton text={readAloud} audioKey={lesson.id} />
 
       {/* Video Demonstration Section (if available for this lesson + language) */}
-      {videoId && !videoFailed ? (
+      {videoIds.length > 0 ? (
         <section>
           <LargeCard className="border-2 border-primary/40 bg-card space-y-4">
             <div className="flex flex-wrap items-center justify-between gap-2">
@@ -106,34 +121,7 @@ function LessonPage() {
               </Chip>
             </div>
             <p className="text-base text-muted-foreground">{t("videoSectionDesc")}</p>
-
-            <div className="aspect-video w-full overflow-hidden rounded-2xl bg-muted shadow-card">
-              {playingVideo ? (
-                <iframe
-                  className="size-full"
-                  src={`https://www.youtube-nocookie.com/embed/${videoId}?rel=0&autoplay=1`}
-                  title={title}
-                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; picture-in-picture"
-                  allowFullScreen
-                  loading="lazy"
-                  onError={() => setVideoFailed(true)}
-                />
-              ) : (
-                <button
-                  onClick={() => setPlayingVideo(true)}
-                  className="flex size-full flex-col items-center justify-center gap-3 p-6 text-center hover:bg-muted/80 transition-colors"
-                  aria-label={`Play ${title}`}
-                >
-                  <span className="flex size-16 items-center justify-center rounded-full bg-primary text-primary-foreground shadow-lift">
-                    <Play className="size-8 ml-1" aria-hidden="true" />
-                  </span>
-                  <span className="text-xl font-bold text-foreground">{t("start")}</span>
-                  <span className="text-sm text-muted-foreground max-w-sm">
-                    {t("videoNeedsInternet")}
-                  </span>
-                </button>
-              )}
-            </div>
+            <VideoCard videoIds={videoIds} title={title} />
           </LargeCard>
         </section>
       ) : null}
@@ -162,16 +150,28 @@ function LessonPage() {
         >
           <Check aria-hidden="true" /> {done ? t("completed") : t("markComplete")}
         </ElderButton>
-        <ElderButton variant="outline" size="xl" onClick={() => toggleFavorite(lesson.id)}>
-          <Heart aria-hidden="true" /> {saved ? t("savedLabel") : t("save")}
+        <ElderButton
+          variant={saved ? "secondary" : "outline"}
+          size="xl"
+          onClick={() => toggleFavorite(lesson.id)}
+          aria-pressed={saved}
+        >
+          <AnimatedHeart active={saved} /> {saved ? t("savedLabel") : t("save")}
         </ElderButton>
       </div>
 
-      {/* Small linked quiz — appears only after the lesson is completed */}
-      {quiz && done ? (
+      {/* Small linked quiz — appears after the lesson is completed. Once the
+          quiz has been started it stays mounted even if completion is
+          un-toggled, so an attempt is never lost. */}
+      {quiz && (done || quizStarted) ? (
         <section>
           <h2 className="mb-3 text-2xl font-bold">✏️ {t("quickQuiz")}</h2>
-          <QuizPanel quizId={quiz.id} title={pick(quiz.title, state.lang)} />
+          <QuizPanel
+            key={quiz.id}
+            quizId={quiz.id}
+            title={pick(quiz.title, state.lang)}
+            onStart={markQuizStarted}
+          />
         </section>
       ) : null}
 

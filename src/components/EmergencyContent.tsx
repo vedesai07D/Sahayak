@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { PhoneCall, ShieldAlert, UserPlus, Trash2 } from "lucide-react";
-import { Chip, ElderButton, LargeCard, SectionHeader } from "@/components/elder";
+import { Chip, ElderButton, ElderInput, LargeCard, SectionHeader } from "@/components/elder";
 import { useApp } from "@/lib/store";
 
 /**
@@ -52,29 +52,35 @@ export function EmergencyContent() {
         {showAddContact ? (
           <LargeCard className="mb-4 space-y-4 border-2 border-primary">
             <h3 className="text-xl font-bold">{t("addEmergencyContact")}</h3>
-            <div className="grid gap-3 sm:grid-cols-3">
-              <input
-                value={name}
-                onChange={(e) => setName(e.target.value)}
-                placeholder={t("contactName")}
-                aria-label={t("contactName")}
-                className="min-h-14 rounded-xl border-2 border-border bg-background px-4 text-lg"
-              />
-              <input
-                value={relationship}
-                onChange={(e) => setRelationship(e.target.value)}
-                placeholder={t("relationship")}
-                aria-label={t("relationship")}
-                className="min-h-14 rounded-xl border-2 border-border bg-background px-4 text-lg"
-              />
-              <input
-                value={phone}
-                onChange={(e) => setPhone(e.target.value)}
-                placeholder={t("phoneNumber")}
-                aria-label={t("phoneNumber")}
-                inputMode="tel"
-                className="min-h-14 rounded-xl border-2 border-border bg-background px-4 text-lg"
-              />
+            <div className="grid grid-cols-1 gap-3 sm:grid-cols-3">
+              <label className="grid min-w-0 gap-1">
+                <span className="text-base font-semibold">{t("contactName")}</span>
+                <ElderInput
+                  value={name}
+                  onChange={(e) => setName(e.target.value)}
+                  placeholder={t("contactName")}
+                  autoComplete="name"
+                />
+              </label>
+              <label className="grid min-w-0 gap-1">
+                <span className="text-base font-semibold">{t("relationship")}</span>
+                <ElderInput
+                  value={relationship}
+                  onChange={(e) => setRelationship(e.target.value)}
+                  placeholder={t("relationship")}
+                />
+              </label>
+              <label className="grid min-w-0 gap-1">
+                <span className="text-base font-semibold">{t("phoneNumber")}</span>
+                <ElderInput
+                  value={phone}
+                  onChange={(e) => setPhone(e.target.value)}
+                  placeholder={t("phoneNumber")}
+                  type="tel"
+                  inputMode="tel"
+                  autoComplete="tel"
+                />
+              </label>
             </div>
             <div className="flex flex-wrap gap-3">
               <ElderButton onClick={addContact} disabled={!name.trim() || !phone.trim()}>

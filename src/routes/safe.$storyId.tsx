@@ -1,11 +1,15 @@
 import { Link, createFileRoute, useParams } from "@tanstack/react-router";
 import { useEffect } from "react";
-import { ArrowLeft, Heart, ShieldAlert } from "lucide-react";
-import { ElderButton, LargeCard, PageHeader, SectionHeader } from "@/components/elder";
+import { ArrowLeft, ShieldAlert, Wifi } from "lucide-react";
+import { AnimatedHeart } from "@/components/AnimatedHeart";
+import { Chip, ElderButton, LargeCard, PageHeader, SectionHeader } from "@/components/elder";
 import { ListenButton } from "@/components/ListenButton";
+import { QuizPanel } from "@/components/QuizPanel";
+import { VideoCard } from "@/components/VideoCard";
 import { useApp } from "@/lib/store";
 import { pick, pickList } from "@/lib/i18n";
 import { getStory } from "@/data/scams";
+import { QUIZZES } from "@/data/content";
 import { storyTrack } from "@/lib/progress";
 
 export const Route = createFileRoute("/safe/$storyId")({
@@ -56,6 +60,8 @@ function StoryPage() {
   const whatToDoIfHappened = pickList(story.whatToDoIfHappened, state.lang);
   const keyLesson = pick(story.keyLesson, state.lang);
 
+  const quiz = story.quizId ? QUIZZES.find((q) => q.id === story.quizId) : undefined;
+
   const readAloud = `${title}. ${body}. ${t("warningSigns")}: ${warningSigns.join(". ")}. ${t("keyLesson")}: ${keyLesson}`;
 
   const completed = (state.completedStories ?? []).includes(story.id);
@@ -80,11 +86,36 @@ function StoryPage() {
         <p className="text-xl leading-relaxed">{body}</p>
         <div className="mt-4 flex flex-wrap gap-3">
           <ListenButton text={readAloud} audioKey={story.id} />
-          <ElderButton variant="outline" onClick={() => toggleFavorite(story.id)}>
-            <Heart aria-hidden="true" /> {isFavorite(story.id) ? t("savedLabel") : t("save")}
+          <ElderButton
+            variant={isFavorite(story.id) ? "secondary" : "outline"}
+            onClick={() => toggleFavorite(story.id)}
+            aria-pressed={isFavorite(story.id)}
+          >
+            <AnimatedHeart active={isFavorite(story.id)} />{" "}
+            {isFavorite(story.id) ? t("savedLabel") : t("save")}
           </ElderButton>
         </div>
       </LargeCard>
+
+      {/* Optional video, shown after the story text */}
+      {story.video ? (
+        <section>
+          <LargeCard className="border-2 border-primary/40 bg-card space-y-4">
+            <div className="flex flex-wrap items-center justify-between gap-2">
+              <h2 className="text-2xl font-bold flex items-center gap-2">
+                <span aria-hidden="true">▶️</span>
+                <span>{t("watchVideo")}</span>
+              </h2>
+              <Chip tone="warning">
+                <Wifi className="size-4 shrink-0" aria-hidden="true" />
+                <span>{t("requiresInternet")}</span>
+              </Chip>
+            </div>
+            <p className="text-base text-muted-foreground">{t("videoSectionDesc")}</p>
+            <VideoCard videoIds={[story.video]} title={title} />
+          </LargeCard>
+        </section>
+      ) : null}
 
       {/* Warning Signs */}
       <section>
@@ -179,6 +210,14 @@ function StoryPage() {
             {t("readStory")}
           </span>
         </Link>
+      ) : null}
+
+      {/* Optional quiz, final section */}
+      {quiz ? (
+        <section>
+          <h2 className="mb-3 text-2xl font-bold">✏️ {t("quickQuiz")}</h2>
+          <QuizPanel key={quiz.id} quizId={quiz.id} title={pick(quiz.title, state.lang)} />
+        </section>
       ) : null}
     </div>
   );

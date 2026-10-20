@@ -1,19 +1,32 @@
-import { useEffect, useState } from "react";
-import { Pause, Play, RotateCcw, Square, Volume2 } from "lucide-react";
+import { useEffect, useRef, useSyncExternalStore } from "react";
+import { Pause, Play, RotateCcw, SkipBack, Square, Volume2 } from "lucide-react";
 import { ElderButton } from "./elder";
 import { useApp } from "@/lib/store";
 import {
-  pauseSpeech,
-  resumeSpeech,
-  speakWithAudioKey,
-  speechSupported,
-  stopSpeech,
+  getSpeechStatus,
+  isSpeechOwner,
+  pauseReading,
+  resumeReading,
+  startReading,
+  stopReading,
+  subscribeSpeech,
 } from "@/lib/speech";
 
 /**
- * Reads `text` aloud. When `audioKey` is given, a pre-generated recording at
- * public/audio/<lang>/<audioKey>.mp3 is preferred; otherwise (or on any failure)
- * the browser's built-in speech synthesis is used. Both paths work fully offline.
+ * Thin UI over the speech controller in src/lib/speech.ts. The controller is
+ * the single source of truth for status, so these buttons ALWAYS reflect
+ * reality (no more controls vanishing while audio still plays):
+ *
+ *   idle/error → one big "Listen" button
+ *   playing    → [Pause] [Restart] [Stop] [Reset]
+ *   paused     → [Resume] [Restart] [Reset]
+ *
+ * Stop/Pause keep the position; Resume continues from there. Only Reset ends
+ * the reading and returns to the start (the single "Listen" button).
+ *
+ * Only one ListenButton plays at a time app-wide; starting one stops any
+ * other. Reading stops on unmount (route change) and when the text or UI
+ * language changes — but not on unrelated re-renders.
  */
 export function ListenButton({
   text,
@@ -25,78 +38,75 @@ export function ListenButton({
   audioKey?: string;
 }) {
   const { state, t } = useApp();
-  const [status, setStatus] = useState<"idle" | "playing" | "paused">("idle");
-  const [error, setError] = useState(false);
 
-  useEffect(() => () => stopSpeech(), []);
+  const ownerRef = useRef<symbol | null>(null);
+  if (ownerRef.current === null) ownerRef.current = Symbol("ListenButton");
+  const owner = ownerRef.current;
+
+  const status = useSyncExternalStore(subscribeSpeech, getSpeechStatus, () => "idle" as const);
+  const isOwner = useSyncExternalStore(
+    subscribeSpeech,
+    () => isSpeechOwner(owner),
+    () => false,
+  );
+  const active = isOwner && (status === "playing" || status === "paused" || status === "loading");
+
+  // Stop reading when this button unmounts (covers navigation away).
+  useEffect(() => () => stopReading(owner), [owner]);
+
+  // Stop (never restart) when the text or the UI language actually changes.
+  const prevRef = useRef({ text, lang: state.lang });
   useEffect(() => {
-    setStatus("idle");
-    stopSpeech();
-  }, [text, state.lang]);
-
-  const start = () => {
-    if (!speechSupported()) {
-      setError(true);
-      return;
+    if (prevRef.current.text !== text || prevRef.current.lang !== state.lang) {
+      prevRef.current = { text, lang: state.lang };
+      stopReading(owner);
     }
-    setError(false);
-    setStatus("playing");
-    void speakWithAudioKey({
-      text,
-      lang: state.lang,
-      rate: state.speechRate,
-      audioKey,
-      onEnd: () => setStatus("idle"),
-      onError: () => {
-        setStatus("idle");
-        setError(true);
-      },
-    });
-  };
+  }, [text, state.lang, owner]);
+
+  const start = () =>
+    startReading({ owner, text, lang: state.lang, rate: state.speechRate, audioKey });
+
+  const listenLabel = label ?? t("listen");
 
   return (
     <div className="flex flex-wrap items-center gap-2">
-      {status === "idle" ? (
-        <ElderButton onClick={start} aria-label={label ?? t("listen")}>
-          <Volume2 aria-hidden="true" /> {label ?? t("listen")}
+      {!active ? (
+        <ElderButton onClick={start} aria-label={listenLabel} aria-pressed={active}>
+          <Volume2 aria-hidden="true" /> {listenLabel}
         </ElderButton>
       ) : (
         <>
-          {status === "playing" ? (
-            <ElderButton
-              variant="secondary"
-              onClick={() => {
-                pauseSpeech();
-                setStatus("paused");
-              }}
-            >
-              <Pause aria-hidden="true" /> {t("pause")}
+          {status === "paused" ? (
+            <ElderButton onClick={() => resumeReading(owner, state.speechRate)} aria-pressed={false}>
+              <Play aria-hidden="true" /> {t("resume")}
             </ElderButton>
           ) : (
             <ElderButton
-              onClick={() => {
-                resumeSpeech();
-                setStatus("playing");
-              }}
+              variant="secondary"
+              onClick={() => pauseReading(owner)}
+              aria-pressed={status === "playing"}
             >
-              <Play aria-hidden="true" /> {t("resume")}
+              <Pause aria-hidden="true" /> {t("pause")}
             </ElderButton>
           )}
           <ElderButton variant="outline" onClick={start} aria-label={t("restart")}>
             <RotateCcw aria-hidden="true" /> {t("restart")}
           </ElderButton>
-          <ElderButton
-            variant="outline"
-            onClick={() => {
-              stopSpeech();
-              setStatus("idle");
-            }}
-          >
-            <Square aria-hidden="true" /> {t("stop")}
+          {status !== "paused" ? (
+            // Stop keeps the position (same as Pause); only Reset goes back to the start.
+            <ElderButton variant="outline" onClick={() => pauseReading(owner)}>
+              <Square aria-hidden="true" /> {t("stop")}
+            </ElderButton>
+          ) : null}
+          <ElderButton variant="outline" onClick={() => stopReading(owner)}>
+            <SkipBack aria-hidden="true" /> {t("reset")}
           </ElderButton>
+          <p className="w-full text-base text-muted-foreground" role="status" aria-live="polite">
+            {status === "paused" ? t("audioPaused") : t("audioPlaying")}
+          </p>
         </>
       )}
-      {error ? (
+      {isOwner && status === "error" ? (
         <p className="text-base text-muted-foreground" role="status">
           {t("readAloudUnavailable")}
         </p>

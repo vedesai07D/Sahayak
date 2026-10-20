@@ -1,9 +1,12 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { useCallback, useEffect, useMemo, useState } from "react";
-import { Flag, Heart, LogOut, MessageCircle, Trash2 } from "lucide-react";
+import { Flag, LogOut, MessageCircle, Trash2 } from "lucide-react";
+import { AnimatedHeart } from "@/components/AnimatedHeart";
 import {
   Chip,
   ElderButton,
+  ElderInput,
+  ElderTextarea,
   EmptyState,
   InfoNote,
   LargeCard,
@@ -53,8 +56,6 @@ type CommentRow = {
   created_at: string;
   profiles?: Profile | null;
 };
-
-const inputCls = "min-h-14 rounded-xl border-2 border-border bg-card px-4 text-lg";
 
 function formatTimeAgo(atIso: string, t: (k: string) => string) {
   const days = Math.floor((Date.now() - new Date(atIso).getTime()) / 86400000);
@@ -112,36 +113,34 @@ function AuthPanel() {
         <h2 className="text-2xl font-bold">{t("communityLoginTitle")}</h2>
         <p className="text-lg text-muted-foreground">{t("communityLoginHint")}</p>
 
-        <label className="grid gap-1">
+        <label className="grid min-w-0 gap-1">
           <span className="text-lg font-semibold">{t("communityEmail")}</span>
-          <input
+          <ElderInput
             type="email"
+            inputMode="email"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
             autoComplete="email"
-            className={inputCls}
           />
         </label>
-        <label className="grid gap-1">
+        <label className="grid min-w-0 gap-1">
           <span className="text-lg font-semibold">{t("communityPassword")}</span>
-          <input
+          <ElderInput
             type="password"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
             autoComplete={mode === "signin" ? "current-password" : "new-password"}
-            className={inputCls}
           />
         </label>
 
         {mode === "signup" ? (
-          <label className="grid gap-1">
+          <label className="grid min-w-0 gap-1">
             <span className="text-lg font-semibold">{t("communityUsername")}</span>
-            <input
+            <ElderInput
               type="text"
               value={username}
               onChange={(e) => setUsername(e.target.value)}
               autoComplete="username"
-              className={inputCls}
             />
             <span className="text-base text-muted-foreground">{t("communityUsernameHint")}</span>
           </label>
@@ -391,27 +390,26 @@ function CommunityPage() {
       <section>
         <SectionHeader title={t("createPost")} emoji="✍️" />
         <LargeCard>
-          <div className="grid gap-4">
-            <label className="grid gap-1">
+          <div className="grid min-w-0 gap-4">
+            <label className="grid min-w-0 gap-1">
               <span className="text-lg font-semibold">{t("selectCategory")}</span>
               <select
                 value={category}
                 onChange={(e) => setCategory(e.target.value)}
-                className="min-h-14 rounded-xl border-2 border-border bg-card px-4 text-lg"
+                className="box-border block min-h-14 w-full min-w-0 max-w-full rounded-xl border-2 border-border bg-card px-4 text-lg"
               >
                 {COMMUNITY_CATEGORIES.map((c) => (
                   <option key={c}>{c}</option>
                 ))}
               </select>
             </label>
-            <label className="grid gap-1">
+            <label className="grid min-w-0 gap-1">
               <span className="text-lg font-semibold">{t("communityYourMessage")}</span>
-              <textarea
+              <ElderTextarea
                 value={text}
                 onChange={(e) => setText(e.target.value)}
                 rows={4}
                 placeholder={t("postPlaceholder")}
-                className="rounded-xl border-2 border-border bg-card p-4 text-lg"
               />
             </label>
             <ElderButton onClick={() => void createPost()} disabled={!text.trim() || submitting}>
@@ -493,7 +491,7 @@ function CommunityPage() {
                     variant={liked ? "primary" : "outline"}
                     onClick={() => void toggleLike(p.id)}
                   >
-                    <Heart aria-hidden="true" /> {t("like")} · {likeCount}
+                    <AnimatedHeart active={liked} /> {t("like")} · {likeCount}
                   </ElderButton>
                   <ElderButton
                     size="md"
@@ -517,12 +515,12 @@ function CommunityPage() {
                         <p className="text-lg">{c.content}</p>
                       </div>
                     ))}
-                    <textarea
+                    <ElderTextarea
                       value={comment}
                       onChange={(e) => setComment(e.target.value)}
                       rows={2}
                       placeholder={t("communityCommentPlaceholder")}
-                      className="w-full rounded-xl border-2 border-border bg-card p-3 text-lg"
+                      aria-label={t("communityCommentPlaceholder")}
                     />
                     <ElderButton
                       size="md"
